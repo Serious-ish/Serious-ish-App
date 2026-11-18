@@ -1,8 +1,13 @@
 -- The audit log is append-only and records who did what to which record and when
 -- (FT-002 acceptance criterion; TRD 4.7; Security & Access 4.5, 4.10).
 begin;
+-- Run as the database owner everywhere (hosted projects connect with a separate CLI login role).
+set local role postgres;
 create extension if not exists pgtap with schema extensions;
-set search_path = public, extensions;
+-- Find pgTAP wherever it is installed (the CLI uses a different schema on hosted projects).
+select set_config('search_path', concat_ws(', ', 'public', 'extensions',
+  (select n.nspname from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+    where e.extname = 'pgtap')), true);
 
 select plan(17);
 
@@ -85,22 +90,22 @@ select throws_ok(
      values ('00000000-0000-0000-0000-0000000000f1', 'forged', 'member', '00000000-0000-0000-0000-00000000000b') $$,
   '42501', null, 'staff cannot write audit entries directly'
 );
-reset role;
+set local role postgres;
 
 select pg_temp.claims('00000000-0000-0000-0000-0000000000f1', 'aal1');
 set local role authenticated;
 select is((select count(*)::int from public.audit_log), 0, 'without a verified second factor staff read nothing');
-reset role;
+set local role postgres;
 
 select pg_temp.claims('00000000-0000-0000-0000-00000000000a', 'aal2');
 set local role authenticated;
 select is((select count(*)::int from public.audit_log), 0, 'a member cannot read the audit log');
-reset role;
+set local role postgres;
 
 select pg_temp.claims('00000000-0000-0000-0000-0000000000f2', 'aal2');
 set local role authenticated;
 select is((select count(*)::int from public.audit_log), 1, 'an admin with a verified second factor reads all entries');
-reset role;
+set local role postgres;
 
 -- moderator_actions: append-only, except filling in a notification time once ------------
 insert into public.reports (id, reporter_id, reported_member_id, reason, sla_due_at)
