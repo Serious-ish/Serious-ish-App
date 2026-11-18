@@ -10,6 +10,10 @@
   "scripts": {
     "mobile": "pnpm --filter @serious-ish/mobile start",
     "moderation": "pnpm --filter @serious-ish/moderation dev",
+    "db:start": "supabase start",
+    "db:reset": "supabase db reset",
+    "db:test": "supabase test db",
+    "db:types": "supabase gen types typescript --local --schema public > packages/shared/src/types/database.generated.ts",
     "typecheck": "pnpm -r --if-present typecheck",
     "lint": "eslint . && pnpm -r --if-present lint",
     "test": "pnpm -r --if-present test",

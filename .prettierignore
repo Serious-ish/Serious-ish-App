@@ -9,3 +9,4 @@ expo-env.d.ts
 supabase/.temp
 supabase/.branches
 apps/moderation/app/generated
+packages/shared/src/types/database.generated.ts

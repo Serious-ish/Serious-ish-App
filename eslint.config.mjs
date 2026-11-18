@@ -6,7 +6,14 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['apps/**', 'supabase/**', '**/node_modules/**', '**/dist/**', '**/coverage/**'],
+    ignores: [
+      'apps/**',
+      'supabase/**',
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/coverage/**',
+      '**/*.generated.ts',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

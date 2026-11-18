@@ -69,6 +69,27 @@ Copy the local API URL and publishable key from `supabase start` into the two `.
 files. For local Edge Functions, copy `supabase/functions/.env.example` to
 `supabase/functions/.env` and use vendor **sandbox** keys only.
 
+### Database
+
+The schema is the 37 tables from TRD 4, built by the dated files in `supabase/migrations`.
+Every table has row level security on; signed-out requests can do nothing, members can only
+read their own rows and allowed columns, and all writes go through database functions.
+
+| Command         | What it does                                                                   |
+| --------------- | ------------------------------------------------------------------------------ |
+| `pnpm db:start` | Starts the local database and applies every migration                          |
+| `pnpm db:reset` | Rebuilds the local database from scratch: migrations, then `supabase/seed.sql` |
+| `pnpm db:test`  | Runs the access-rule and audit tests in `supabase/tests` (pgTAP)               |
+| `pnpm db:types` | Regenerates `packages/shared/src/types/database.generated.ts`                  |
+
+Rules for database changes (TRD 3.2, Security 4):
+
+- Never edit a migration that has been applied; add a new dated file.
+- A new table ships in the same pull request as its row level security, its grants and tests.
+  `supabase/tests/rls/00_inventory.test.sql` fails CI for any table without row level
+  security, any table a signed-out request can touch, and any table members can write directly.
+- After a schema change, run `pnpm db:types` and commit the regenerated file; CI checks it.
+
 ### Checks
 
 Everything CI runs, in one command:
@@ -88,6 +109,7 @@ Or one at a time: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | Type-check, lint, format and tests | TypeScript strict, ESLint, Prettier, Jest, and the public variable check                                     |
 | Secret scan                        | gitleaks over the full history and working tree, plus a self-test proving it catches every required key type |
+| Database tests                     | Applies every migration to an empty database, runs the pgTAP tests and the linter, checks generated types    |
 | Pull request title                 | The title follows the commit format below (commitlint)                                                       |
 | Dependency review                  | Fails a pull request that adds a dependency with a known high-severity vulnerability                         |
 
