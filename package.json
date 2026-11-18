@@ -1,0 +1,32 @@
+{
+  "name": "serious-ish",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=24.3.0 <25",
+    "pnpm": ">=10 <11"
+  },
+  "scripts": {
+    "mobile": "pnpm --filter @serious-ish/mobile start",
+    "moderation": "pnpm --filter @serious-ish/moderation dev",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "eslint . && pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:public-env": "node scripts/check-public-env.mjs",
+    "check:secret-scan": "bash scripts/test-secret-scan.sh",
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm check:public-env"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.0.0"
+  }
+}

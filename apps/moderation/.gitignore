@@ -1,0 +1,12 @@
+# Next.js
+/.next/
+/out/
+next-env.d.ts
+
+# Vercel
+.vercel
+
+# Test output
+/coverage
+/test-results/
+/playwright-report/

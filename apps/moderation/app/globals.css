@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+
+/* Colour variables are generated from packages/design-tokens/palette.ts (FT-003).
+   No colour value may be written by hand in this app. */
+
+:root {
+  color-scheme: light dark;
+}

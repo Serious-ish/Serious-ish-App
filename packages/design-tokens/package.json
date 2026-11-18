@@ -1,0 +1,17 @@
+{
+  "name": "@serious-ish/design-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./palette.ts",
+  "types": "./palette.ts",
+  "exports": {
+    ".": "./palette.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3"
+  }
+}

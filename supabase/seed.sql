@@ -1,0 +1,2 @@
+-- Test data for LOCAL development only (supabase start / supabase db reset).
+-- Never real people, never real phone numbers or emails. Never run against staging or production.
