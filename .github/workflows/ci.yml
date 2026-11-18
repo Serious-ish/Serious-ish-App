@@ -123,3 +123,13 @@ jobs:
       - uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: high
+          # Accepted exceptions. Each needs a reason and a removal condition.
+          #
+          # GHSA-fc5q-39xc-vjpf (picomatch ReDoS, high), accepted 18 November 2026.
+          #   Every picomatch release up to 4.0.7 is affected and no fixed version exists.
+          #   It reaches us only through build and test tooling bundled with Expo SDK 58
+          #   (Metro, the Expo CLI, Jest), which matches file patterns we write ourselves.
+          #   It is not in the member app's runtime or the moderation page's production
+          #   dependencies. Remove this line once picomatch ships a fix (Dependabot will open
+          #   the update pull request).
+          allow-ghsas: GHSA-fc5q-39xc-vjpf
