@@ -1,0 +1,69 @@
+# Secret scan configuration (FT-001, Security & Access 8.2).
+# Extends gitleaks' built-in rules (AWS, Twilio API keys, private keys, JWTs, and more)
+# with the services Serious-ish uses. Runs in CI on every pull request and push.
+
+title = "Serious-ish secret scan"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "supabase-secret-key"
+description = "Supabase secret key (bypasses all database rules)"
+regex = '''\bsb_secret_[A-Za-z0-9_-]{20,}'''
+keywords = ["sb_secret_"]
+
+[[rules]]
+id = "supabase-service-role-assignment"
+description = "Supabase service role or secret key assigned a value"
+regex = '''(?i)\b[A-Z0-9_]*(SERVICE_ROLE|SUPABASE_SECRET)[A-Z0-9_]*[ \t]*[:=][ \t]*['"]?[A-Za-z0-9_\-\.]{20,}'''
+keywords = ["service_role", "supabase_secret"]
+
+[[rules]]
+id = "resend-api-key"
+description = "Resend API key"
+regex = '''\bre_[A-Za-z0-9]{6,}_[A-Za-z0-9]{16,}\b'''
+keywords = ["re_"]
+
+[[rules]]
+id = "revenuecat-secret-key"
+description = "RevenueCat secret API key (public SDK keys start appl_ or goog_ and are allowed)"
+regex = '''\bsk_[A-Za-z0-9]{24,}\b'''
+keywords = ["sk_"]
+
+[[rules]]
+id = "twilio-account-sid"
+description = "Twilio account SID"
+regex = '''\bAC[0-9a-f]{32}\b'''
+keywords = ["ac"]
+
+[[rules]]
+id = "twilio-auth-token-assignment"
+description = "Twilio auth token assigned a value"
+regex = '''(?i)\b[A-Z0-9_]*TWILIO[A-Z0-9_]*(TOKEN|SECRET)[A-Z0-9_]*[ \t]*[:=][ \t]*['"]?[0-9a-f]{32}\b'''
+keywords = ["twilio"]
+
+[[rules]]
+id = "vendor-secret-assignment"
+description = "Age-check vendor, webhook, AWS, Expo or Sentry secret assigned a value"
+regex = '''(?i)\b[A-Z0-9_]*(VERIFICATION_VENDOR_API_KEY|VERIFICATION_WEBHOOK_SECRET|REVENUECAT_WEBHOOK_AUTH|REVENUECAT_SECRET_API_KEY|AWS_SECRET_ACCESS_KEY|EXPO_ACCESS_TOKEN|EXPO_TOKEN|SENTRY_AUTH_TOKEN|SUPABASE_ACCESS_TOKEN|SUPABASE_DB_PASSWORD|YOTI)[A-Z0-9_]*[ \t]*[:=][ \t]*['"]?[A-Za-z0-9_\-\.\/+=]{16,}'''
+keywords = ["verification_", "webhook", "revenuecat", "aws_secret", "expo_", "sentry_auth", "supabase_", "yoti"]
+
+[[rules]]
+id = "public-variable-holding-secret"
+description = "A secret-looking value assigned to an EXPO_PUBLIC_ or NEXT_PUBLIC_ variable"
+regex = '''\b(?:EXPO|NEXT)_PUBLIC_[A-Z0-9_]+[ \t]*[:=][ \t]*['"]?(?:sb_secret_|sk_|re_[A-Za-z0-9]{6,}_|AKIA|ASIA|SK[0-9a-f]{32}|AC[0-9a-f]{32}|-----BEGIN)'''
+keywords = ["expo_public_", "next_public_"]
+
+[allowlist]
+description = "Lock files, generated output and public-by-design RevenueCat SDK keys"
+# RevenueCat public SDK keys (appl_, goog_) ship in the app by design (TRD 7.2).
+regexes = [
+  '''^(?:appl|goog)_[A-Za-z0-9]+$''',
+]
+paths = [
+  '''pnpm-lock\.yaml''',
+  '''(^|/)node_modules/''',
+  '''(^|/)\.next/''',
+  '''(^|/)\.expo/''',
+]
