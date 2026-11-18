@@ -23,6 +23,7 @@ const appId: Record<AppEnv, string> = {
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: `Serious-ish${nameSuffix[appEnv]}`,
+  owner: 'serious-ish',
   slug: 'serious-ish',
   version: '0.1.0',
   orientation: 'portrait',
@@ -61,5 +62,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     appEnv,
+    eas: {
+      // Expo project @serious-ish/serious-ish. Not a secret.
+      projectId: '2e463244-17f9-4712-af89-9f989dcf7464',
+    },
   },
 });
