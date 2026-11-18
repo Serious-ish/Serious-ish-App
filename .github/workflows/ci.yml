@@ -88,6 +88,33 @@ jobs:
       - name: Prove the scan catches every required key type
         run: bash scripts/test-secret-scan.sh
 
+  database:
+    name: Database tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.40.7
+
+      # Applies every migration to an empty database, the same way staging and production do.
+      - name: Start the database and apply migrations
+        run: supabase db start
+
+      - name: Access-rule and audit tests (pgTAP)
+        run: supabase test db
+
+      - name: Lint database functions
+        run: supabase db lint --schema public,private --fail-on error
+
+      - name: Generated types are up to date
+        run: |
+          supabase gen types typescript --local --schema public > packages/shared/src/types/database.generated.ts
+          git diff --exit-code -- packages/shared/src/types/database.generated.ts \
+            || { echo "Run 'pnpm db:types' and commit the result."; exit 1; }
+
   pr-title:
     name: Pull request title
     if: github.event_name == 'pull_request'
