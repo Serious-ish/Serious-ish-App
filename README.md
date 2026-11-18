@@ -142,6 +142,19 @@ Production keys live only in the secret stores: EAS environment variables, Verce
 variables, Supabase Edge Function secrets and GitHub Actions environment secrets. They are never
 in a file, a chat message or a screenshot.
 
+### Where each environment lives
+
+| Service                      | Staging                                                          | Production                                                          |
+| ---------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Supabase (org `Serious-ish`) | `serious-ish-staging` (`zlxekbykyfkdnrmpsjvq`), Canada (Central) | `serious-ish-production` (`owqljrsfycuuqwhzglix`), Canada (Central) |
+| Expo (org `serious-ish`)     | Project `@serious-ish/serious-ish`, EAS environment `preview`    | Same project, EAS environment `production`                          |
+| GitHub Actions               | Environment `staging`                                            | Environment `production` (deployable from `main` only)              |
+| Vercel                       | Not set up yet                                                   | Not set up yet                                                      |
+
+The Supabase URL and publishable key for each environment are set as EAS environment variables
+(`eas env:list --environment preview` or `production`). For local development, copy the values
+from `supabase start` into `.env.local` files as described above.
+
 ## Environment variables
 
 Every value the code reads from outside itself. `.env.example` files list the names with empty
