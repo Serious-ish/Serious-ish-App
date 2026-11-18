@@ -1,8 +1,13 @@
 -- Inventory checks over EVERY table, so a table added later without its rules fails here
 -- (Security & Access edge case A19: "New table merged without RLS: CI must fail").
 begin;
+-- Run as the database owner everywhere (hosted projects connect with a separate CLI login role).
+set local role postgres;
 create extension if not exists pgtap with schema extensions;
-set search_path = public, extensions;
+-- Find pgTAP wherever it is installed (the CLI uses a different schema on hosted projects).
+select set_config('search_path', concat_ws(', ', 'public', 'extensions',
+  (select n.nspname from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+    where e.extname = 'pgtap')), true);
 
 select plan(9);
 

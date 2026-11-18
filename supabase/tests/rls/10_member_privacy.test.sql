@@ -1,8 +1,13 @@
 -- Member A against member B: A reads only what the rules allow (FT-002 acceptance
 -- criteria: private fields, coordinates; Security & Access 3.5, 4.2, 4.4).
 begin;
+-- Run as the database owner everywhere (hosted projects connect with a separate CLI login role).
+set local role postgres;
 create extension if not exists pgtap with schema extensions;
-set search_path = public, extensions;
+-- Find pgTAP wherever it is installed (the CLI uses a different schema on hosted projects).
+select set_config('search_path', concat_ws(', ', 'public', 'extensions',
+  (select n.nspname from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+    where e.extname = 'pgtap')), true);
 
 select plan(20);
 
@@ -14,7 +19,7 @@ returns void language sql as $$
   insert into public.members (id, status) values (p_id, p_status);
 $$;
 
--- Acts as a signed-in member for the rest of the transaction (until reset role).
+-- Acts as a signed-in member until the test switches back to the database owner.
 create function pg_temp.act_as(p_id uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims',
@@ -119,7 +124,7 @@ select throws_ok(
   'A cannot change their own account status'
 );
 
-reset role;
+set local role postgres;
 
 -- As member B ------------------------------------------------------------------------------
 select pg_temp.act_as('00000000-0000-0000-0000-00000000000b');
@@ -152,6 +157,6 @@ select is(
   'members read only the allow-listed app switches'
 );
 
-reset role;
+set local role postgres;
 select * from finish();
 rollback;

@@ -1,8 +1,13 @@
 -- A signed-out request cannot read or write any table (FT-002 acceptance criterion).
 -- Tries every table in public, so a table added later is covered automatically.
 begin;
+-- Run as the database owner everywhere (hosted projects connect with a separate CLI login role).
+set local role postgres;
 create extension if not exists pgtap with schema extensions;
-set search_path = public, extensions;
+-- Find pgTAP wherever it is installed (the CLI uses a different schema on hosted projects).
+select set_config('search_path', concat_ws(', ', 'public', 'extensions',
+  (select n.nspname from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+    where e.extname = 'pgtap')), true);
 
 select plan(3);
 
@@ -26,15 +31,15 @@ begin
         execute format('delete from public.%I', t.tablename);
       end if;
       allowed := allowed || t.tablename::text;
-      execute 'reset role';
+      execute 'set local role postgres';
     exception
       when insufficient_privilege then
-        execute 'reset role';
+        execute 'set local role postgres';
       when others then
         -- Any other error (for example a missing required value) means the privilege
         -- check let the request through, which counts as allowed.
         allowed := allowed || (t.tablename::text || ' (' || sqlstate || ')');
-        execute 'reset role';
+        execute 'set local role postgres';
     end;
   end loop;
   return allowed;
