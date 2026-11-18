@@ -1,5 +1,15 @@
 import type { Metadata } from 'next';
+import { Outfit, Prata, Sora } from 'next/font/google';
 import './globals.css';
+
+// Same typefaces as the app, through next/font (Frontend Specification 3.3).
+const prata = Prata({ weight: '400', subsets: ['latin'], variable: '--font-prata' });
+const sora = Sora({ weight: ['500', '600'], subsets: ['latin'], variable: '--font-sora' });
+const outfit = Outfit({
+  weight: ['400', '500', '600'],
+  subsets: ['latin'],
+  variable: '--font-outfit',
+});
 
 export const metadata: Metadata = {
   title: 'Serious-ish Moderation',
@@ -7,11 +17,13 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Fonts (Prata, Sora, Outfit) and the token CSS variables arrive with FT-003.
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="flex min-h-full flex-col">{children}</body>
+    <html
+      lang="en"
+      className={`${prata.variable} ${sora.variable} ${outfit.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   );
 }

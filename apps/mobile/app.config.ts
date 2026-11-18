@@ -1,3 +1,7 @@
+// tsx lets the config import TypeScript from the token package (Expo SDK 58 TypeScript guide).
+import 'tsx/cjs';
+
+import { photo } from '@serious-ish/design-tokens';
 import type { ConfigContext, ExpoConfig } from 'expo/config';
 
 type AppEnv = 'development' | 'staging' | 'production';
@@ -37,8 +41,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: appId[appEnv],
     adaptiveIcon: {
-      // Splash red from the Colour Palette; identical in light and dark.
-      backgroundColor: '#A62625',
+      // Splash red, identical in light and dark.
+      backgroundColor: photo.splashRed,
       foregroundImage: './assets/images/android-icon-foreground.png',
       backgroundImage: './assets/images/android-icon-background.png',
       monochromeImage: './assets/images/android-icon-monochrome.png',
@@ -47,10 +51,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: [
     'expo-router',
+    'expo-sqlite',
     [
       'expo-splash-screen',
       {
-        backgroundColor: '#A62625',
+        backgroundColor: photo.splashRed,
         image: './assets/images/splash-icon.png',
         imageWidth: 76,
       },
