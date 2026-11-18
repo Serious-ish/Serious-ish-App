@@ -144,16 +144,22 @@ in a file, a chat message or a screenshot.
 
 ### Where each environment lives
 
-| Service                      | Staging                                                          | Production                                                          |
-| ---------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Supabase (org `Serious-ish`) | `serious-ish-staging` (`zlxekbykyfkdnrmpsjvq`), Canada (Central) | `serious-ish-production` (`owqljrsfycuuqwhzglix`), Canada (Central) |
-| Expo (org `serious-ish`)     | Project `@serious-ish/serious-ish`, EAS environment `preview`    | Same project, EAS environment `production`                          |
-| GitHub Actions               | Environment `staging`                                            | Environment `production` (deployable from `main` only)              |
-| Vercel                       | Not set up yet                                                   | Not set up yet                                                      |
+| Service                          | Staging                                                                                | Production                                                              |
+| -------------------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Supabase (org `Serious-ish`)     | `serious-ish-staging` (`zlxekbykyfkdnrmpsjvq`), Canada (Central)                       | `serious-ish-production` (`owqljrsfycuuqwhzglix`), Canada (Central)     |
+| Expo (org `serious-ish`)         | Project `@serious-ish/serious-ish`, EAS environment `preview`                          | Same project, EAS environment `production`                              |
+| GitHub Actions                   | Environment `staging`                                                                  | Environment `production` (deployable from `main` only)                  |
+| Vercel (team `Serious-ish Team`) | Project `serious-ish-moderation`, **Preview** deployments (every branch except `main`) | Same project, **Production**: https://serious-ish-moderation.vercel.app |
 
 The Supabase URL and publishable key for each environment are set as EAS environment variables
-(`eas env:list --environment preview` or `production`). For local development, copy the values
-from `supabase start` into `.env.local` files as described above.
+(`eas env:list --environment preview` or `production`) and Vercel environment variables
+(`vercel env ls`). For local development, copy the values from `supabase start` into
+`.env.local` files as described above.
+
+The moderation page builds on Node 24 (`engines` in `apps/moderation/package.json`) and runs its
+server code in Vercel's Montréal region, `yul1` (`apps/moderation/vercel.json`, decision TRD-04).
+Preview deployments have no fixed `SITE_URL`; the page will fall back to the deployment's own
+address when staff sign-in arrives (FT-011).
 
 ## Environment variables
 
