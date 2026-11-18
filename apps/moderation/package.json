@@ -6,8 +6,9 @@
     "node": "24.x"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "tokens": "node ../../packages/design-tokens/build-css.ts app/generated/tokens.css",
+    "dev": "pnpm tokens && next dev",
+    "build": "pnpm tokens && next build",
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit",
     "lint": "eslint ."

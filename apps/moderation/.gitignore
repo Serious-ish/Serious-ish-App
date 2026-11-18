@@ -10,3 +10,6 @@ next-env.d.ts
 /coverage
 /test-results/
 /playwright-report/
+
+# CSS variables generated from packages/design-tokens (pnpm tokens)
+/app/generated/
