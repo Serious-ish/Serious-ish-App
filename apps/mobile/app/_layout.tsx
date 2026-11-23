@@ -9,6 +9,7 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider as NavigationTheme } from
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { ThemeProvider } from '@/theme/ThemeProvider';
 import { useTheme } from '@/theme/useTheme';
@@ -37,9 +38,11 @@ export default function RootLayout() {
   if (!ready) return null;
 
   return (
-    <ThemeProvider>
-      <ThemedStack />
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider>
+        <ThemedStack />
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -62,7 +65,11 @@ function ThemedStack() {
   return (
     <NavigationTheme value={navigationTheme}>
       <StatusBar style={mode === 'dark' ? 'light' : 'dark'} />
-      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: c.bg } }} />
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: c.bg } }}>
+        <Stack.Protected guard={__DEV__}>
+          <Stack.Screen name="(dev)/gallery" />
+        </Stack.Protected>
+      </Stack>
     </NavigationTheme>
   );
 }

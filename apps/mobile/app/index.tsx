@@ -1,53 +1,33 @@
-import {
-  border,
-  radius,
-  space,
-  typography,
-  type ThemePreference,
-} from '@serious-ish/design-tokens';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { space } from '@serious-ish/design-tokens';
+import { router } from 'expo-router';
+import { StyleSheet, View } from 'react-native';
 
+import { Button } from '@/components/ui/Button';
+import { Text } from '@/components/ui/Text';
 import { env } from '@/config/env';
 import { useTheme } from '@/theme/useTheme';
 
-const choices: ThemePreference[] = ['system', 'light', 'dark'];
-
 // Placeholder start screen so a fresh clone has something to open.
-// Replaced by the Welcome screen and status gate (FT-008, FT-013). The appearance switch is for
-// development builds only; members get Profile, Settings, Appearance (FT-072).
+// Replaced by the Welcome screen and status gate (FT-008, FT-013). The gallery link (with the
+// appearance switch) is for development builds only; members get Profile, Settings, Appearance
+// (FT-072).
 export default function Index() {
-  const { c, preference, setPreference } = useTheme();
+  const { c } = useTheme();
 
   return (
     <View style={[styles.container, { backgroundColor: c.bg }]}>
-      <Text accessibilityRole="header" style={[typography.display, { color: c.ink }]}>
+      <Text variant="display" accessibilityRole="header">
         Serious-ish
       </Text>
-      <Text style={[typography.body, { color: c.muted }]}>Environment: {env.appEnv}</Text>
+      <Text color="muted">Environment: {env.appEnv}</Text>
       {__DEV__ && (
-        <View accessibilityRole="radiogroup" style={styles.row}>
-          {choices.map((p) => {
-            const selected = preference === p;
-            return (
-              <Pressable
-                key={p}
-                accessibilityRole="radio"
-                accessibilityState={{ checked: selected }}
-                onPress={() => setPreference(p)}
-                style={[
-                  styles.choice,
-                  {
-                    backgroundColor: selected ? c.brand : c.raise,
-                    borderColor: selected ? c.brand : c.muted,
-                  },
-                ]}
-              >
-                <Text style={[typography.buttonS, { color: selected ? c.onbrand : c.ink }]}>
-                  {p}
-                </Text>
-              </Pressable>
-            );
-          })}
+        <View style={styles.dev}>
+          <Button
+            label="Component gallery"
+            variant="secondary"
+            size="medium"
+            onPress={() => router.push('/gallery')}
+          />
         </View>
       )}
     </View>
@@ -62,17 +42,5 @@ const styles = StyleSheet.create({
     gap: space.xs,
     paddingHorizontal: space.lg,
   },
-  row: {
-    flexDirection: 'row',
-    gap: space.xs,
-    marginTop: space.xl,
-  },
-  choice: {
-    minHeight: space['4xl'],
-    minWidth: space['4xl'],
-    paddingHorizontal: space.md,
-    justifyContent: 'center',
-    borderRadius: radius.pill,
-    borderWidth: border.control,
-  },
+  dev: { marginTop: space.xl },
 });

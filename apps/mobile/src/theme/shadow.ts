@@ -7,3 +7,6 @@ export const elevationStyle = (t: Theme, level: keyof typeof elevation) => {
   const drop = `0 ${y}px ${blur}px ${shadow(t, alpha)}`;
   return { boxShadow: t.raiseline === 'none' ? drop : `${drop}, ${t.raiseline}` };
 };
+
+// Cards have no shadow, but dark mode still draws the raised top edge (5.5).
+export const raisedEdge = (t: Theme) => (t.raiseline === 'none' ? {} : { boxShadow: t.raiseline });
