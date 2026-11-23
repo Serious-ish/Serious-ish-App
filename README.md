@@ -34,7 +34,9 @@ Folder names follow TRD section 3.1. The workspace (`pnpm-workspace.yaml`) lists
 - **Node.js 24** (24.3 or newer). The version is pinned in `.nvmrc`: run `nvm use`.
 - **pnpm 10**, through Corepack: `corepack enable pnpm`. The exact version is pinned in
   `package.json`.
-- **Supabase CLI** and **Docker Desktop** for the local backend.
+- **Docker Desktop** for the local backend. The **Supabase CLI** is a pinned dev dependency
+  (`pnpm install` brings it); run it as `pnpm exec supabase`, not a global install, so everyone
+  and CI use the same version.
 - **gitleaks** to run the secret scan locally (`brew install gitleaks`).
 - For the phone: Expo Go for the placeholder screens, and an Expo development build once native
   modules arrive (RevenueCat and the age-check camera flow need one).
@@ -62,10 +64,10 @@ pnpm moderation
 Local backend (needs Docker running; prints the local URL and keys):
 
 ```bash
-supabase start
+pnpm db:start
 ```
 
-Copy the local API URL and publishable key from `supabase start` into the two `.env.local`
+Copy the local API URL and publishable key from `pnpm db:start` into the two `.env.local`
 files. For local Edge Functions, copy `supabase/functions/.env.example` to
 `supabase/functions/.env` and use vendor **sandbox** keys only.
 
@@ -156,7 +158,7 @@ shared between environments.
 
 | Environment | Backend                                     | Mobile build profile (`eas.json`) | Moderation page            | Vendor mode                               |
 | ----------- | ------------------------------------------- | --------------------------------- | -------------------------- | ----------------------------------------- |
-| Development | Supabase running locally (`supabase start`) | `development`                     | `pnpm moderation` locally  | Sandbox keys; no real members or payments |
+| Development | Supabase running locally (`pnpm db:start`)  | `development`                     | `pnpm moderation` locally  | Sandbox keys; no real members or payments |
 | Staging     | Its own Supabase project, Canada (Central)  | `staging`                         | Vercel preview environment | Store sandbox; vendor test mode           |
 | Production  | The live Supabase project, Canada (Central) | `production`                      | Vercel production          | Live; deployed only from `main` by CI     |
 
@@ -175,7 +177,7 @@ in a file, a chat message or a screenshot.
 
 The Supabase URL and publishable key for each environment are set as EAS environment variables
 (`eas env:list --environment preview` or `production`) and Vercel environment variables
-(`vercel env ls`). For local development, copy the values from `supabase start` into
+(`vercel env ls`). For local development, copy the values from `pnpm db:start` into
 `.env.local` files as described above.
 
 The moderation page builds on Node 24 (`engines` in `apps/moderation/package.json`) and runs its
@@ -225,7 +227,7 @@ their own two-step login.
 
 ### Edge Functions (`supabase/functions/.env.example`)
 
-All secret. Set per project with `supabase secrets set --project-ref <ref>`; they exist only on
+All secret. Set per project with `pnpm exec supabase secrets set --remote=<ref>`; they exist only on
 Supabase's servers.
 
 | Variable                      | Public / Secret             | Owner   | Used by                            | What it is                                        |
