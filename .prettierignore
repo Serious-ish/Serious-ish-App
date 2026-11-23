@@ -10,3 +10,5 @@ supabase/.temp
 supabase/.branches
 apps/moderation/app/generated
 packages/shared/src/types/database.generated.ts
+apps/mobile/ios
+apps/mobile/android

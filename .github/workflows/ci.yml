@@ -95,23 +95,30 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: supabase/setup-cli@v1
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
         with:
-          version: 2.40.7
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      # The Supabase CLI is a pinned dev dependency, so CI runs the same version as every laptop.
+      - name: Install
+        run: pnpm install --frozen-lockfile
 
       # Applies every migration to an empty database, the same way staging and production do.
       - name: Start the database and apply migrations
-        run: supabase db start
+        run: pnpm exec supabase db start
 
       - name: Access-rule and audit tests (pgTAP)
-        run: supabase test db
+        run: pnpm exec supabase test db
 
       - name: Lint database functions
-        run: supabase db lint --schema public,private --fail-on error
+        run: pnpm exec supabase db lint --schema public,private --fail-on error
 
       - name: Generated types are up to date
         run: |
-          supabase gen types typescript --local --schema public > packages/shared/src/types/database.generated.ts
+          pnpm exec supabase gen types typescript --schema public > packages/shared/src/types/database.generated.ts
           git diff --exit-code -- packages/shared/src/types/database.generated.ts \
             || { echo "Run 'pnpm db:types' and commit the result."; exit 1; }
 
