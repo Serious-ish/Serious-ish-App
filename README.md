@@ -77,12 +77,26 @@ The schema is the 37 tables from TRD 4, built by the dated files in `supabase/mi
 Every table has row level security on; signed-out requests can do nothing, members can only
 read their own rows and allowed columns, and all writes go through database functions.
 
-| Command         | What it does                                                                   |
-| --------------- | ------------------------------------------------------------------------------ |
-| `pnpm db:start` | Starts the local database and applies every migration                          |
-| `pnpm db:reset` | Rebuilds the local database from scratch: migrations, then `supabase/seed.sql` |
-| `pnpm db:test`  | Runs the access-rule and audit tests in `supabase/tests` (pgTAP)               |
-| `pnpm db:types` | Regenerates `packages/shared/src/types/database.generated.ts`                  |
+| Command                | What it does                                                                                |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| `pnpm db:start`        | Starts the local database and applies every migration                                       |
+| `pnpm db:reset`        | Rebuilds the local database from scratch: migrations, then `supabase/seed.sql`              |
+| `pnpm db:test`         | Runs the access-rule and audit tests in `supabase/tests` (pgTAP)                            |
+| `pnpm db:test:storage` | Runs the photo storage tests against the running local stack (`supabase/tests/storage-api`) |
+| `pnpm db:types`        | Regenerates `packages/shared/src/types/database.generated.ts`                               |
+
+### Photo storage
+
+Photos live in two private buckets (FT-007). Members upload to `photos-intake`, one JPEG of at
+most 1.5 MB per slot reserved with `create_photo_slot`, into their own folder only; they cannot
+read, list, sign, overwrite or delete files. Photo screening (FT-023) strips location data and
+copies an approved photo to `photos`. Display links come only from the `photo-links` Edge
+Function, last 10 minutes and are given only for approved photos the caller may see:
+`private.photo_visible_to` refuses unscreened photos, blocks either way, unmatches, deletions,
+holds and inactive members.
+
+If `pnpm db:start` skips storage on a machine that was linked to a hosted project, delete
+`supabase/.temp/storage-version`: it holds the hosted storage version, which is not published.
 
 Rules for database changes (TRD 3.2, Security 4):
 

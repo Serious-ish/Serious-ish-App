@@ -859,7 +859,19 @@ isOneToOne: false
             [_ in never]: never
           }
           Functions: {
-            [_ in never]: never
+            "create_photo_slot":
+{ Args: { "p_position": number }; Returns: {
+              "photo_id": string,"storage_path": string
+            }[]
+                           },
+"photo_link_paths":
+{ Args: { "p_photo_ids": (string)[] }; Returns: {
+              "photo_id": string,"storage_path": string
+            }[]
+                           },
+"remove_photo":
+{ Args: { "p_photo_id": string }; Returns: undefined
+                           }
           }
           Enums: {
             "age_status": "not_started"|"pending"|"review"|"passed"|"blocked","consent_kind": "terms"|"privacy"|"biometric_check"|"location"|"notifications"|"marketing","event_status": "draft"|"approved"|"canceled"|"removed","location_source": "device"|"selected_area","match_status": "active"|"chat_open"|"expired"|"unmatched"|"blocked","member_status": "pending"|"active"|"paused"|"held"|"suspended"|"deleted","moderation_action": "dismiss"|"warn"|"remove_content"|"suspend"|"ban"|"reinstate"|"escalate","photo_status": "uploaded"|"scanning"|"approved"|"rejected"|"removed","plan_tier": "free"|"spark"|"elite","report_reason": "underage"|"threat"|"unsafe_event"|"harassment"|"fake"|"scam"|"spam"|"other","report_status": "new"|"in_review"|"resolved"|"appealed","staff_role": "moderator"|"age_reviewer"|"support"|"admin","store_kind": "apple"|"google","subscription_status": "active"|"grace"|"canceled_but_active"|"expired"|"refunded","swipe_action": "pass"|"like"|"superlike","usage_kind": "like"|"rewind"|"superlike","verification_kind": "selfie_age"|"id_fallback"|"store_age_signal","verification_status": "started"|"passed"|"failed"|"needs_review"|"expired"
