@@ -871,6 +871,12 @@ isOneToOne: false
                            },
 "remove_photo":
 { Args: { "p_photo_id": string }; Returns: undefined
+                           },
+"request_support":
+{ Args: { "p_details": string,"p_type": string }; Returns: string
+                           },
+"submit_appeal":
+{ Args: { "p_message": string }; Returns: string
                            }
           }
           Enums: {

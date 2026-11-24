@@ -1,7 +1,8 @@
-import { ErrorState } from '@/components/ui/ErrorState';
+import { Notice } from '@/components/patterns/Notice';
 import { en } from '@/i18n/en';
 
-// A blocking screen with no tabs (Frontend Specification 7.1, 7.2): error X03.
-export default function Page() {
-  return <ErrorState message={en.errors.X03} />;
+// deleted (Frontend Specification 7.2): restore is not offered, so support is the only action.
+// Error X03.
+export default function Deleted() {
+  return <Notice message={en.errors.X03} body={en.notices.deletedBody} />;
 }

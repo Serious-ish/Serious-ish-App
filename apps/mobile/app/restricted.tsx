@@ -1,7 +1,7 @@
-import { ErrorState } from '@/components/ui/ErrorState';
+import { Notice } from '@/components/patterns/Notice';
 import { en } from '@/i18n/en';
 
-// A blocking screen with no tabs (Frontend Specification 7.1, 7.2): error A18.
-export default function Page() {
-  return <ErrorState message={en.errors.A18} />;
+// suspended (Frontend Specification 7.2). Error A18.
+export default function Restricted() {
+  return <Notice message={en.errors.A18} body={en.notices.restrictedBlocked} appeal />;
 }
