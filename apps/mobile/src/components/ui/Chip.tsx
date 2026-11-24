@@ -1,10 +1,11 @@
-import { border, icon, radius, space } from '@serious-ish/design-tokens';
+import { border, icon, photo, radius, space } from '@serious-ish/design-tokens';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { useTheme } from '@/theme/useTheme';
 
 import { TOUCH } from './constants';
 import { FocusRing, useFocusRing } from './focus';
+import { Frost } from './Frost';
 import { CheckIcon } from './icons';
 import { Text } from './Text';
 
@@ -13,18 +14,20 @@ const HEIGHT = 40;
 const READ_ONLY_HEIGHT = 32;
 const slop = (TOUCH - HEIGHT) / 2;
 
-type Props = { label: string; selected?: boolean; onPress?: () => void };
+type Props = { label: string; selected?: boolean; onPress?: () => void; onPhoto?: boolean };
 
 // Without onPress the chip is read-only. Selected chips have a check, so colour is never the
 // only signal (6.2). The "up to five" rule belongs to the screen that uses them.
-export function Chip({ label, selected = false, onPress }: Props) {
+// onPhoto (read-only only): a frosted tag over a photo, the same in both themes (2.5).
+export function Chip({ label, selected = false, onPress, onPhoto = false }: Props) {
   const { c, mode } = useTheme();
   const { focused, focusProps } = useFocusRing();
 
   if (!onPress) {
     return (
-      <View style={[styles.readOnly, { backgroundColor: c.surf }]}>
-        <Text variant="label" control>
+      <View style={[styles.readOnly, !onPhoto && { backgroundColor: c.surf }]}>
+        {onPhoto && <Frost kind="chip" style={styles.round} />}
+        <Text variant="label" control style={onPhoto ? { color: photo.offWhite } : undefined}>
           {label}
         </Text>
       </View>
@@ -75,6 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     borderWidth: border.divider,
   },
+  round: { borderRadius: radius.pill },
   readOnly: {
     minHeight: READ_ONLY_HEIGHT,
     justifyContent: 'center',

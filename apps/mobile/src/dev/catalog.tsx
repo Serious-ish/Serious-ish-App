@@ -1,4 +1,4 @@
-import { radius, space } from '@serious-ish/design-tokens';
+import { palette, radius, space } from '@serious-ish/design-tokens';
 import { useState, type ReactElement, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -10,6 +10,7 @@ import { Chip } from '@/components/ui/Chip';
 import { CodeInput } from '@/components/ui/CodeInput';
 import { Dialog } from '@/components/ui/Dialog';
 import { ErrorState } from '@/components/ui/ErrorState';
+import { Frost, FrostArea } from '@/components/ui/Frost';
 import { Header } from '@/components/ui/Header';
 import {
   BellIcon,
@@ -137,6 +138,28 @@ function Overlay({
 function Photo({ children }: { children: ReactNode }) {
   const { c } = useTheme();
   return <View style={[styles.photo, { backgroundColor: c.secondary }]}>{children}</View>;
+}
+
+// A stand-in for a photo behind frosted glass, the same in both themes: the blur softens the
+// sharp stripe edges.
+const stripes = ['brand', 'secondary', 'ver', 'warn', 'ok', 'ink'] as const;
+function Stripes() {
+  return (
+    <View style={[StyleSheet.absoluteFill, styles.stripes]}>
+      {[...stripes, ...stripes].map((name, i) => (
+        <View key={i} style={[styles.stripe, { backgroundColor: palette.light[name] }]} />
+      ))}
+    </View>
+  );
+}
+
+function GlassPanel({ kind, label }: { kind: 'glass' | 'glassdeep'; label: string }) {
+  return (
+    <View style={styles.panel}>
+      <Frost kind={kind} style={styles.panelCorners} />
+      <Text color="glasstext">{label}</Text>
+    </View>
+  );
 }
 
 export const catalog: Section[] = [
@@ -464,6 +487,48 @@ export const catalog: Section[] = [
     ],
   },
   {
+    title: 'Glass',
+    wide: true,
+    demos: [
+      {
+        name: 'Photo chips',
+        render: () => (
+          <FrostArea backdrop={<Stripes />} style={styles.frostArea}>
+            <View style={styles.chipRow}>
+              <Chip label="Hiking" onPhoto />
+              <Chip label="Live music" onPhoto />
+              <Chip label="Coffee" onPhoto />
+            </View>
+          </FrostArea>
+        ),
+      },
+      {
+        name: 'Glass panels',
+        render: () => (
+          <FrostArea backdrop={<Stripes />} style={styles.frostArea}>
+            <View style={styles.chipRow}>
+              <GlassPanel kind="glass" label="Glass" />
+              <GlassPanel kind="glassdeep" label="Glass deep" />
+            </View>
+          </FrostArea>
+        ),
+      },
+      {
+        name: 'Frosted sheet',
+        render: () => (
+          <Overlay name="frosted sheet">
+            {(open, close) => (
+              <Sheet visible={open} onClose={close} title="Report" frosted>
+                <ListRow label="Fake profile" onPress={close} divider />
+                <ListRow label="Inappropriate photos" onPress={close} />
+              </Sheet>
+            )}
+          </Overlay>
+        ),
+      },
+    ],
+  },
+  {
     title: 'Dialogs',
     demos: [
       {
@@ -524,4 +589,16 @@ const styles = StyleSheet.create({
   skeletonRow: { flexDirection: 'row', alignItems: 'center', gap: space.md },
   skeletonLines: { flex: 1, gap: space.xs },
   errorFrame: { height: 320 },
+  stripes: { flexDirection: 'row' },
+  stripe: { flex: 1 },
+  frostArea: {
+    height: 180,
+    justifyContent: 'flex-end',
+    padding: space.md,
+    borderRadius: radius.xl,
+    overflow: 'hidden',
+  },
+  chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: space.xs },
+  panel: { flex: 1, padding: space.md, borderRadius: radius.lg },
+  panelCorners: { borderRadius: radius.lg },
 });

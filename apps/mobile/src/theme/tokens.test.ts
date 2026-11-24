@@ -1,6 +1,7 @@
 import {
   border,
   elevation,
+  glassBlur,
   gradient,
   icon,
   palette,
@@ -61,10 +62,12 @@ describe('design tokens match Frontend Specification v1.5 section 02', () => {
       chip: 'rgba(255,255,255,.16)',
       chipBlur: 16,
       chipEdge: 'rgba(255,255,255,.26)',
+      chipFallback: 'rgba(255,255,255,.24)',
       tag: 'rgba(255,255,255,.9)',
       shade: 'rgba(16,8,6,.28)',
       splashRed: '#A62625',
     });
+    expect(glassBlur).toBe(18);
   });
 
   it('gradients (2.5)', () => {

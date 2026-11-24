@@ -53,3 +53,13 @@ for (const file of [
 ]) {
   jest.doMock(`${gestureHandler}/${file}`, () => ({ Reanimated: undefined, Worklets: undefined }));
 }
+
+// expo-blur: snapshots show the blur settings, not the native view ref that Android blurs from.
+jest.mock('expo-blur', () => {
+  const { createElement } = jest.requireActual('react');
+  const { View } = jest.requireActual('react-native');
+  return {
+    BlurView: ({ blurTarget: _target, ...props }) => createElement(View, props),
+    BlurTargetView: (props) => createElement(View, props),
+  };
+});
