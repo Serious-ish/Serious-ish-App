@@ -56,7 +56,15 @@ describe.each(['light', 'dark'] as const)('%s theme', (mode) => {
 
 // FT-004: screen readers read each component clearly, and touch targets are at least 48 by 48
 // (Frontend Specification 4.2, 6.2).
-const controlRoles = new Set(['button', 'checkbox', 'switch', 'adjustable', 'radio', 'link']);
+const controlRoles = new Set([
+  'button',
+  'checkbox',
+  'switch',
+  'adjustable',
+  'radio',
+  'link',
+  'tab',
+]);
 const textOf = (node: TestInstance): string =>
   node.children.map((child) => (typeof child === 'string' ? child : textOf(child))).join('');
 const slop = (s: unknown) =>
