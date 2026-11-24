@@ -10,13 +10,25 @@ import { Chip } from '@/components/ui/Chip';
 import { CodeInput } from '@/components/ui/CodeInput';
 import { Dialog } from '@/components/ui/Dialog';
 import { ErrorState } from '@/components/ui/ErrorState';
-import { BellIcon, GearIcon, TrashIcon, XIcon } from '@/components/ui/icons';
+import { Header } from '@/components/ui/Header';
+import {
+  BellIcon,
+  CalendarBlankIcon,
+  ChatCircleIcon,
+  GearIcon,
+  HeartIcon,
+  HouseIcon,
+  TrashIcon,
+  UserIcon,
+  XIcon,
+} from '@/components/ui/icons';
 import { ListRow } from '@/components/ui/ListRow';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Sheet } from '@/components/ui/Sheet';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Slider } from '@/components/ui/Slider';
 import { Switch } from '@/components/ui/Switch';
+import { TabBar, type Tab } from '@/components/ui/TabBar';
 import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { Toast } from '@/components/ui/Toast';
@@ -32,6 +44,15 @@ export type Demo = { name: string; render: () => ReactElement };
 export type Section = { title: string; wide?: boolean; demos: Demo[] };
 
 const noop = () => {};
+
+const tabs = (badges: Record<string, number> = {}): Tab[] =>
+  [
+    { name: 'home', label: 'Home', icon: HouseIcon },
+    { name: 'matches', label: 'Matches', icon: HeartIcon },
+    { name: 'chat', label: 'Chat', icon: ChatCircleIcon },
+    { name: 'events', label: 'Events', icon: CalendarBlankIcon },
+    { name: 'profile', label: 'Profile', icon: UserIcon },
+  ].map((tab) => ({ ...tab, badge: badges[tab.name] }));
 
 function Field(
   props: Omit<Parameters<typeof TextField>[0], 'value' | 'onChangeText'> & { initial?: string },
@@ -398,6 +419,20 @@ export const catalog: Section[] = [
             <ErrorState message={en.errors.G02} onRetry={noop} />
           </View>
         ),
+      },
+    ],
+  },
+  {
+    title: 'Navigation',
+    wide: true,
+    demos: [
+      { name: 'Header, top-level', render: () => <Header title="Matches" /> },
+      { name: 'Header, detail', render: () => <Header title="Maya, 29" onBack={noop} /> },
+      { name: 'Header, scrolled', render: () => <Header title="Events" divider /> },
+      { name: 'Tab bar', render: () => <TabBar tabs={tabs()} active="home" onPress={noop} /> },
+      {
+        name: 'Tab bar with counts',
+        render: () => <TabBar tabs={tabs({ matches: 3, chat: 12 })} active="chat" onPress={noop} />,
       },
     ],
   },

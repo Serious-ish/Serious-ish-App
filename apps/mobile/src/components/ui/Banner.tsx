@@ -30,7 +30,8 @@ const kinds = {
   error: { status: 'err', words: 'ink', Glyph: WarningCircleIcon },
 } as const satisfies Record<BannerKind, { status: Colour; words: Colour; Glyph: unknown }>;
 
-type Props = { kind: BannerKind; message: string; onHide: () => void };
+// Without onHide the banner stays until the screen removes it, such as the paused banner (7.2).
+type Props = { kind: BannerKind; message: string; onHide?: () => void };
 
 // Success and info hide after 4 seconds; warnings and errors stay until fixed or dismissed.
 // Read by the screen reader as soon as shown, assertively for errors (6.2).
@@ -38,8 +39,9 @@ export function Banner({ kind, message, onHide }: Props) {
   const { c } = useTheme();
   const reduce = useReducedMotion();
   const { status, words, Glyph } = kinds[kind];
-  const autoHide = kind === 'success' || kind === 'info';
-  const hide = useEffectEvent(onHide);
+  const autoHide = onHide !== undefined && (kind === 'success' || kind === 'info');
+  const dismissable = onHide !== undefined && !autoHide;
+  const hide = useEffectEvent(() => onHide?.());
 
   useEffect(() => {
     AccessibilityInfo.announceForAccessibility(message);
@@ -59,7 +61,7 @@ export function Banner({ kind, message, onHide }: Props) {
       <Text variant="bodyS" color={words} style={styles.message}>
         {message}
       </Text>
-      {!autoHide && (
+      {dismissable && (
         <View style={styles.close}>
           <IconButton icon={XIcon} label={en.ui.close} onPress={onHide} bare />
         </View>

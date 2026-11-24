@@ -14,6 +14,27 @@ export const en = {
     tryAgain: 'Try again',
   },
 
+  // The tabs and screen titles (Frontend Specification 5.7 and 7.1).
+  nav: {
+    home: 'Home',
+    matches: 'Matches',
+    chat: 'Chat',
+    events: 'Events',
+    profile: 'Profile',
+    back: 'Back',
+  },
+  screens: {
+    welcome: 'Welcome',
+    details: 'Your details',
+    profileStep: (step: number, of: number) => `Step ${step} of ${of}`,
+    ageCheck: 'Age check',
+    review: 'Review pending',
+    goLive: 'Go live',
+  },
+  gate: {
+    paused: 'Your profile is hidden',
+  },
+
   // Security & Access v1.3, section 06: the message for each error ID. null means the failure
   // is handled silently. Draft copy for the founder's review before beta (FE-04).
   errors: {

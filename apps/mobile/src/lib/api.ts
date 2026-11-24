@@ -29,6 +29,8 @@ export const setSession = (next: Session) => {
   session = next;
 };
 
+export const appVersion = Constants.expoConfig?.version ?? '0';
+
 const TIMEOUT_MS = 15_000; // 30_000 for photo uploads (9.2)
 const RETRY_DELAYS_MS = [1_000, 3_000, 8_000];
 // A longer wait than this is shown to the person (G03) rather than waited out.
@@ -51,8 +53,13 @@ export const rpc = <T>(name: string, args: object, options: CallOptions<T>) =>
 export const edge = <T>(name: string, body: object, options: CallOptions<T>) =>
   call(`/functions/v1/${name}`, body, options);
 
-async function call<T>(path: string, args: object, options: CallOptions<T>): Promise<T> {
-  const body = options.requestId ? { ...args, client_request_id: options.requestId } : args;
+// A read straight from a table, protected by row-level security (9.4), e.g.
+// read('members', 'select=status', schema).
+export const read = <T>(table: string, query: string, schema: z.ZodType<T>) =>
+  call(`/rest/v1/${table}?${query}`, null, { schema, kind: 'read' });
+
+async function call<T>(path: string, args: object | null, options: CallOptions<T>): Promise<T> {
+  const body = args && options.requestId ? { ...args, client_request_id: options.requestId } : args;
   const retries = options.kind === 'read' || options.requestId ? RETRY_DELAYS_MS : [];
   let refreshed = false;
   let waited = false;
@@ -84,20 +91,20 @@ async function call<T>(path: string, args: object, options: CallOptions<T>): Pro
 const transient = (error: ApiError) =>
   error.code === 'OFFLINE' || error.code === 'TIMEOUT' || (error.status ?? 0) >= 500;
 
-async function send<T>(path: string, body: object, options: CallOptions<T>): Promise<T> {
+async function send<T>(path: string, body: object | null, options: CallOptions<T>): Promise<T> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), options.timeoutMs ?? TIMEOUT_MS);
   const token = session.accessToken();
   try {
     const res = await fetch(env.supabaseUrl + path, {
-      method: 'POST',
+      method: body ? 'POST' : 'GET',
       headers: {
         apikey: env.supabasePublishableKey,
         'Content-Type': 'application/json',
-        'x-app-version': Constants.expoConfig?.version ?? '0',
+        'x-app-version': appVersion,
         ...(token && { Authorization: `Bearer ${token}` }),
       },
-      body: JSON.stringify(body),
+      ...(body && { body: JSON.stringify(body) }),
       signal: controller.signal,
     });
     const ref = res.headers.get('sb-request-id') ?? res.headers.get('x-request-id');
