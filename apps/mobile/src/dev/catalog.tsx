@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/Card';
 import { Chip } from '@/components/ui/Chip';
 import { CodeInput } from '@/components/ui/CodeInput';
 import { Dialog } from '@/components/ui/Dialog';
+import { ErrorState } from '@/components/ui/ErrorState';
 import { BellIcon, GearIcon, TrashIcon, XIcon } from '@/components/ui/icons';
 import { ListRow } from '@/components/ui/ListRow';
 import { ProgressBar } from '@/components/ui/ProgressBar';
@@ -19,6 +20,7 @@ import { Switch } from '@/components/ui/Switch';
 import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { Toast } from '@/components/ui/Toast';
+import { en } from '@/i18n/en';
 import { useTheme } from '@/theme/useTheme';
 
 // Every component state from Frontend Specification section 05, in one list. The gallery screen
@@ -386,6 +388,20 @@ export const catalog: Section[] = [
     ],
   },
   {
+    title: 'Error state',
+    wide: true,
+    demos: [
+      {
+        name: 'Screen that cannot load (G02)',
+        render: () => (
+          <View style={styles.errorFrame}>
+            <ErrorState message={en.errors.G02} onRetry={noop} />
+          </View>
+        ),
+      },
+    ],
+  },
+  {
     title: 'Toast',
     demos: [
       {
@@ -472,4 +488,5 @@ const styles = StyleSheet.create({
   photo: { alignSelf: 'flex-start', padding: space.md, borderRadius: radius.md },
   skeletonRow: { flexDirection: 'row', alignItems: 'center', gap: space.md },
   skeletonLines: { flex: 1, gap: space.xs },
+  errorFrame: { height: 320 },
 });

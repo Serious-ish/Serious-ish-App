@@ -5,18 +5,38 @@ import { Prata_400Regular } from '@expo-google-fonts/prata/400Regular';
 import { Sora_500Medium } from '@expo-google-fonts/sora/500Medium';
 import { Sora_600SemiBold } from '@expo-google-fonts/sora/600SemiBold';
 import { useFonts } from 'expo-font';
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider as NavigationTheme } from 'expo-router';
+import {
+  DarkTheme,
+  DefaultTheme,
+  Stack,
+  ThemeProvider as NavigationTheme,
+  type ErrorBoundaryProps,
+} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { ErrorState } from '@/components/ui/ErrorState';
+import { en } from '@/i18n/en';
+import { initSentry } from '@/lib/sentry';
 import { ThemeProvider } from '@/theme/ThemeProvider';
 import { useTheme } from '@/theme/useTheme';
 
 // The red splash stays up until fonts and theme are ready, so a dark phone never shows a white
 // screen (TRD 2.6). The theme is read synchronously, so only the fonts are waited for.
 void SplashScreen.preventAutoHideAsync();
+initSentry();
+
+// A crash anywhere shows the general error (G08), never the error's own text or stack
+// (Security 06). FT-012 adds the crash report and its reference code.
+export function ErrorBoundary({ retry }: ErrorBoundaryProps) {
+  return (
+    <ThemeProvider>
+      <ErrorState message={en.errors.G08} onRetry={retry} />
+    </ThemeProvider>
+  );
+}
 
 // Root layout. Query client and session gate arrive with FT-008.
 export default function RootLayout() {
