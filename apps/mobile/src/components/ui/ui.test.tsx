@@ -1,5 +1,5 @@
-import { palette } from '@serious-ish/design-tokens';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { palette, photo } from '@serious-ish/design-tokens';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import type { ReactElement } from 'react';
 import { AccessibilityInfo, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -10,9 +10,11 @@ import { ThemeContext } from '@/theme/ThemeProvider';
 
 import { Banner } from './Banner';
 import { Button } from './Button';
+import { Chip } from './Chip';
 import { CodeInput } from './CodeInput';
 import { transition } from './constants';
 import { Dialog } from './Dialog';
+import { frostMode } from './Frost';
 import { Skeleton } from './Skeleton';
 import { Slider } from './Slider';
 import { formatPhone, phoneDigits, TextField } from './TextField';
@@ -260,5 +262,41 @@ describe('Banner and Toast (5.6)', () => {
     await show(<Toast message="Saved" onHide={onHide} />);
     jest.advanceTimersByTime(3_000);
     expect(onHide).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('frosted glass (2.5, 2.8)', () => {
+  const ios = { os: 'ios', version: '18.6', reduceTransparency: false, hasTarget: false };
+  const android = { os: 'android', version: 33, reduceTransparency: false, hasTarget: true };
+
+  it('blurs only where the phone does it well', () => {
+    expect(frostMode(ios)).toBe('blur');
+    expect(frostMode(android)).toBe('blur');
+    expect(frostMode({ ...android, version: 31 })).toBe('blur');
+    // Older than Android 12, the blur is slow; without a target, Android cannot read the photo.
+    expect(frostMode({ ...android, version: 30 })).toBe('solid');
+    expect(frostMode({ ...android, hasTarget: false })).toBe('solid');
+  });
+
+  it('respects Reduce Transparency', () => {
+    expect(frostMode({ ...ios, reduceTransparency: true })).toBe('solid');
+    expect(frostMode({ ...android, reduceTransparency: true })).toBe('solid');
+  });
+
+  it('switches a photo chip to the solid tint when Reduce Transparency turns on', async () => {
+    let onChange: (on: boolean) => void = () => {};
+    jest.spyOn(AccessibilityInfo, 'addEventListener').mockImplementation((_event, handler) => {
+      onChange = handler as (on: boolean) => void;
+      return { remove: () => {} } as ReturnType<typeof AccessibilityInfo.addEventListener>;
+    });
+    await show(<Chip label="Hiking" onPhoto />);
+    const tree = () => JSON.stringify(screen.toJSON());
+    expect(tree()).toContain(photo.chip);
+    expect(tree()).not.toContain(photo.chipFallback);
+
+    await act(() => onChange(true));
+    expect(tree()).toContain(photo.chipFallback);
+    expect(tree()).toContain(photo.shade);
+    expect(tree()).not.toContain(photo.chip);
   });
 });

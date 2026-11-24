@@ -7081,6 +7081,1760 @@ exports[`dark theme Error state › Screen that cannot load (G02) 1`] = `
 </View>
 `;
 
+exports[`dark theme Glass › Frosted sheet 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      accessibilityLabel="Show frosted sheet"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": false,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "minHeight": 48,
+          "minWidth": 48,
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "flexDirection": "row",
+              "flexGrow": 1,
+              "gap": 8,
+              "justifyContent": "center",
+            },
+            {
+              "paddingHorizontal": 24,
+              "paddingVertical": 8,
+            },
+            {
+              "backgroundColor": "#2B2121",
+            },
+            {
+              "borderColor": "#3D3333",
+              "borderWidth": 1.5,
+            },
+            {
+              "boxShadow": "0 1px 3px rgba(0,0,0,0.44), inset 0 1px 0 rgba(255,255,255,.07)",
+            },
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          ]
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={1.2}
+          style={
+            [
+              {
+                "fontFamily": "Outfit_600SemiBold",
+                "fontSize": 16,
+                "lineHeight": 20,
+              },
+              {
+                "color": "#F3F1F1",
+              },
+              [
+                false,
+                false,
+              ],
+            ]
+          }
+        >
+          Show frosted sheet
+        </Text>
+      </View>
+    </View>
+    <Modal
+      animationType="none"
+      navigationBarTranslucent={true}
+      onRequestClose={[Function]}
+      statusBarTranslucent={true}
+      transparent={true}
+      visible={true}
+    >
+      <View
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "backgroundColor": "rgba(0,0,0,.66)",
+              },
+              {
+                "opacity": 0,
+              },
+            ]
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={false}
+            collapsable={false}
+            focusable={true}
+            importantForAccessibility="no"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          accessibilityViewIsModal={true}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "borderTopLeftRadius": 24,
+                "borderTopRightRadius": 24,
+                "bottom": 0,
+                "gap": 12,
+                "left": 0,
+                "paddingHorizontal": 20,
+                "paddingTop": 8,
+                "position": "absolute",
+                "right": 0,
+              },
+              {
+                "backgroundColor": undefined,
+                "maxHeight": 1133.8999999999999,
+                "paddingBottom": 54,
+              },
+              {
+                "boxShadow": "0 4px 16px rgba(0,0,0,0.6599999999999999), inset 0 1px 0 rgba(255,255,255,.07)",
+              },
+              {
+                "opacity": 1,
+                "transform": [
+                  {
+                    "translateY": 1334,
+                  },
+                ],
+              },
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderTopLeftRadius": 24,
+                  "borderTopRightRadius": 24,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={45}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="dark"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(48,34,33,.62)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderTopLeftRadius": 24,
+                    "borderTopRightRadius": 24,
+                  },
+                  {
+                    "borderColor": "rgba(255,255,255,.14)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <View
+            handlerTags={
+              [
+                10,
+              ]
+            }
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            onGestureHandlerTouchEvent={[Function]}
+            onStartShouldSetResponder={[Function]}
+            pointerEvents="box-none"
+            style={
+              {
+                "display": "contents",
+              }
+            }
+          >
+            <View>
+              <View
+                style={
+                  [
+                    {
+                      "alignSelf": "center",
+                      "borderRadius": 999,
+                      "height": 4,
+                      "marginBottom": 8,
+                      "width": 36,
+                    },
+                    {
+                      "backgroundColor": "#A59797",
+                    },
+                  ]
+                }
+              />
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "minHeight": 48,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  maxFontSizeMultiplier={1.4}
+                  style={
+                    [
+                      {
+                        "fontFamily": "Sora_600SemiBold",
+                        "fontSize": 17,
+                        "lineHeight": 22,
+                      },
+                      {
+                        "color": "#F3E9E6",
+                      },
+                      {
+                        "flex": 1,
+                      },
+                    ]
+                  }
+                >
+                  Report
+                </Text>
+                <View
+                  style={
+                    {
+                      "marginLeft": "auto",
+                    }
+                  }
+                >
+                  <View
+                    accessibilityLabel="Close"
+                    accessibilityRole="button"
+                    accessibilityState={
+                      {
+                        "busy": undefined,
+                        "checked": undefined,
+                        "disabled": undefined,
+                        "expanded": undefined,
+                        "selected": undefined,
+                      }
+                    }
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
+                    accessible={true}
+                    collapsable={false}
+                    focusable={true}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      [
+                        {
+                          "alignItems": "center",
+                          "borderRadius": 999,
+                          "height": 48,
+                          "justifyContent": "center",
+                          "width": 48,
+                        },
+                        false,
+                        {
+                          "backgroundColor": "transparent",
+                        },
+                      ]
+                    }
+                  >
+                    <RNSVGSvgView
+                      align="xMidYMid"
+                      bbHeight={24}
+                      bbWidth={24}
+                      className="x-undefined__svg-icon-phosphor"
+                      color="#F3F1F1"
+                      fill="currentColor"
+                      focusable={false}
+                      height={24}
+                      meetOrSlice={0}
+                      minX={0}
+                      minY={0}
+                      style={
+                        [
+                          {
+                            "backgroundColor": "transparent",
+                            "borderWidth": 0,
+                          },
+                          [
+                            undefined,
+                            undefined,
+                            {},
+                          ],
+                          {
+                            "flex": 0,
+                            "height": 24,
+                            "width": 24,
+                          },
+                        ]
+                      }
+                      testID="phosphor-react-native-x-undefined"
+                      vbHeight={256}
+                      vbWidth={256}
+                      width={24}
+                    >
+                      <RNSVGGroup
+                        fill={
+                          {
+                            "type": 2,
+                          }
+                        }
+                        propList={
+                          [
+                            "fill",
+                          ]
+                        }
+                      >
+                        <RNSVGGroup
+                          fill={
+                            {
+                              "payload": 4294177265,
+                              "type": 0,
+                            }
+                          }
+                          propList={
+                            [
+                              "fill",
+                            ]
+                          }
+                        >
+                          <RNSVGPath
+                            d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128 50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
+                            fill={
+                              {
+                                "payload": 4278190080,
+                                "type": 0,
+                              }
+                            }
+                          />
+                        </RNSVGGroup>
+                      </RNSVGGroup>
+                    </RNSVGSvgView>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            accessibilityLabel="Fake profile"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "gap": 16,
+                  "minHeight": 56,
+                  "paddingHorizontal": 16,
+                },
+                false,
+              ]
+            }
+          >
+            <Text
+              maxFontSizeMultiplier={1.4}
+              style={
+                [
+                  {
+                    "fontFamily": "Outfit_400Regular",
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#F3F1F1",
+                  },
+                  {
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Fake profile
+            </Text>
+            <RNSVGSvgView
+              align="xMidYMid"
+              bbHeight={20}
+              bbWidth={20}
+              className="caret-right-undefined__svg-icon-phosphor"
+              color="#A59797"
+              fill="currentColor"
+              focusable={false}
+              height={20}
+              meetOrSlice={0}
+              minX={0}
+              minY={0}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "borderWidth": 0,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                    {},
+                  ],
+                  {
+                    "flex": 0,
+                    "height": 20,
+                    "width": 20,
+                  },
+                ]
+              }
+              testID="phosphor-react-native-caret-right-undefined"
+              vbHeight={256}
+              vbWidth={256}
+              width={20}
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "type": 2,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              >
+                <RNSVGGroup
+                  fill={
+                    {
+                      "payload": 4289042327,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "fill",
+                    ]
+                  }
+                >
+                  <RNSVGPath
+                    d="m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32"
+                    fill={
+                      {
+                        "payload": 4278190080,
+                        "type": 0,
+                      }
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGSvgView>
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "height": 1,
+                    "left": 16,
+                    "position": "absolute",
+                    "right": 0,
+                  },
+                  {
+                    "backgroundColor": "#3D3333",
+                  },
+                ]
+              }
+            />
+          </View>
+          <View
+            accessibilityLabel="Inappropriate photos"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "gap": 16,
+                  "minHeight": 56,
+                  "paddingHorizontal": 16,
+                },
+                false,
+              ]
+            }
+          >
+            <Text
+              maxFontSizeMultiplier={1.4}
+              style={
+                [
+                  {
+                    "fontFamily": "Outfit_400Regular",
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#F3F1F1",
+                  },
+                  {
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Inappropriate photos
+            </Text>
+            <RNSVGSvgView
+              align="xMidYMid"
+              bbHeight={20}
+              bbWidth={20}
+              className="caret-right-undefined__svg-icon-phosphor"
+              color="#A59797"
+              fill="currentColor"
+              focusable={false}
+              height={20}
+              meetOrSlice={0}
+              minX={0}
+              minY={0}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "borderWidth": 0,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                    {},
+                  ],
+                  {
+                    "flex": 0,
+                    "height": 20,
+                    "width": 20,
+                  },
+                ]
+              }
+              testID="phosphor-react-native-caret-right-undefined"
+              vbHeight={256}
+              vbWidth={256}
+              width={20}
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "type": 2,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              >
+                <RNSVGGroup
+                  fill={
+                    {
+                      "payload": 4289042327,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "fill",
+                    ]
+                  }
+                >
+                  <RNSVGPath
+                    d="m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32"
+                    fill={
+                      {
+                        "payload": 4278190080,
+                        "type": 0,
+                      }
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGSvgView>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`dark theme Glass › Glass panels 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "borderRadius": 24,
+          "height": 180,
+          "justifyContent": "flex-end",
+          "overflow": "hidden",
+          "padding": 16,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "flexDirection": "row",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#A62625",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#C16867",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F80ED",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#D9822B",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F9E44",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#361616",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#A62625",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#C16867",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F80ED",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#D9822B",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F9E44",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#361616",
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "gap": 8,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "borderRadius": 16,
+              "flex": 1,
+              "padding": 16,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 16,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={45}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="dark"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(48,34,33,.62)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 16,
+                  },
+                  {
+                    "borderColor": "rgba(255,255,255,.14)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.4}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_400Regular",
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#F3E9E6",
+                },
+                undefined,
+              ]
+            }
+          >
+            Glass
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "borderRadius": 16,
+              "flex": 1,
+              "padding": 16,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 16,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={45}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="dark"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(20,16,16,.93)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 16,
+                  },
+                  {
+                    "borderColor": "rgba(255,255,255,.14)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.4}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_400Regular",
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#F3E9E6",
+                },
+                undefined,
+              ]
+            }
+          >
+            Glass deep
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`dark theme Glass › Photo chips 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "borderRadius": 24,
+          "height": 180,
+          "justifyContent": "flex-end",
+          "overflow": "hidden",
+          "padding": 16,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "flexDirection": "row",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#A62625",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#C16867",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F80ED",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#D9822B",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F9E44",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#361616",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#A62625",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#C16867",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F80ED",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#D9822B",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F9E44",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#361616",
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "gap": 8,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "borderRadius": 999,
+                "justifyContent": "center",
+                "minHeight": 32,
+                "paddingHorizontal": 12,
+              },
+              false,
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 999,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={40}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="light"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(255,255,255,.16)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 999,
+                  },
+                  {
+                    "borderColor": "rgba(255,255,255,.26)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.2}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_500Medium",
+                  "fontSize": 14,
+                  "lineHeight": 18,
+                },
+                {
+                  "color": "#F3F1F1",
+                },
+                {
+                  "color": "#FFF6F4",
+                },
+              ]
+            }
+          >
+            Hiking
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "borderRadius": 999,
+                "justifyContent": "center",
+                "minHeight": 32,
+                "paddingHorizontal": 12,
+              },
+              false,
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 999,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={40}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="light"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(255,255,255,.16)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 999,
+                  },
+                  {
+                    "borderColor": "rgba(255,255,255,.26)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.2}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_500Medium",
+                  "fontSize": 14,
+                  "lineHeight": 18,
+                },
+                {
+                  "color": "#F3F1F1",
+                },
+                {
+                  "color": "#FFF6F4",
+                },
+              ]
+            }
+          >
+            Live music
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "borderRadius": 999,
+                "justifyContent": "center",
+                "minHeight": 32,
+                "paddingHorizontal": 12,
+              },
+              false,
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 999,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={40}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="light"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(255,255,255,.16)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 999,
+                  },
+                  {
+                    "borderColor": "rgba(255,255,255,.26)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.2}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_500Medium",
+                  "fontSize": 14,
+                  "lineHeight": 18,
+                },
+                {
+                  "color": "#F3F1F1",
+                },
+                {
+                  "color": "#FFF6F4",
+                },
+              ]
+            }
+          >
+            Coffee
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
 exports[`dark theme List rows › Plain 1`] = `
 <View
   style={
@@ -9885,7 +11639,7 @@ exports[`dark theme Sheet › Bottom sheet 1`] = `
           <View
             handlerTags={
               [
-                8,
+                9,
               ]
             }
             onGestureHandlerEvent={[Function]}
@@ -10560,7 +12314,7 @@ exports[`dark theme Sliders › Range 1`] = `
         <View
           handlerTags={
             [
-              6,
+              7,
             ]
           }
           onGestureHandlerEvent={[Function]}
@@ -10619,7 +12373,7 @@ exports[`dark theme Sliders › Range 1`] = `
         <View
           handlerTags={
             [
-              7,
+              8,
             ]
           }
           onGestureHandlerEvent={[Function]}
@@ -10771,7 +12525,7 @@ exports[`dark theme Sliders › Single value 1`] = `
         <View
           handlerTags={
             [
-              5,
+              6,
             ]
           }
           onGestureHandlerEvent={[Function]}
@@ -19488,6 +21242,1757 @@ exports[`light theme Error state › Screen that cannot load (G02) 1`] = `
               Try again
             </Text>
           </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`light theme Glass › Frosted sheet 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      accessibilityLabel="Show frosted sheet"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": false,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "minHeight": 48,
+          "minWidth": 48,
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "flexDirection": "row",
+              "flexGrow": 1,
+              "gap": 8,
+              "justifyContent": "center",
+            },
+            {
+              "paddingHorizontal": 24,
+              "paddingVertical": 8,
+            },
+            {
+              "backgroundColor": "#FFFFFF",
+            },
+            false,
+            {
+              "boxShadow": "0 1px 3px rgba(54,22,22,0.08)",
+            },
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            },
+          ]
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={1.2}
+          style={
+            [
+              {
+                "fontFamily": "Outfit_600SemiBold",
+                "fontSize": 16,
+                "lineHeight": 20,
+              },
+              {
+                "color": "#361616",
+              },
+              [
+                false,
+                false,
+              ],
+            ]
+          }
+        >
+          Show frosted sheet
+        </Text>
+      </View>
+    </View>
+    <Modal
+      animationType="none"
+      navigationBarTranslucent={true}
+      onRequestClose={[Function]}
+      statusBarTranslucent={true}
+      transparent={true}
+      visible={true}
+    >
+      <View
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "backgroundColor": "rgba(54,22,22,.55)",
+              },
+              {
+                "opacity": 0,
+              },
+            ]
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={false}
+            collapsable={false}
+            focusable={true}
+            importantForAccessibility="no"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          accessibilityViewIsModal={true}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "borderTopLeftRadius": 24,
+                "borderTopRightRadius": 24,
+                "bottom": 0,
+                "gap": 12,
+                "left": 0,
+                "paddingHorizontal": 20,
+                "paddingTop": 8,
+                "position": "absolute",
+                "right": 0,
+              },
+              {
+                "backgroundColor": undefined,
+                "maxHeight": 1133.8999999999999,
+                "paddingBottom": 54,
+              },
+              {
+                "boxShadow": "0 4px 16px rgba(54,22,22,0.12)",
+              },
+              {
+                "opacity": 1,
+                "transform": [
+                  {
+                    "translateY": 1334,
+                  },
+                ],
+              },
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderTopLeftRadius": 24,
+                  "borderTopRightRadius": 24,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={45}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="light"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(251,244,244,.86)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderTopLeftRadius": 24,
+                    "borderTopRightRadius": 24,
+                  },
+                  {
+                    "borderColor": "rgba(54,22,22,.14)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <View
+            handlerTags={
+              [
+                5,
+              ]
+            }
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            onGestureHandlerTouchEvent={[Function]}
+            onStartShouldSetResponder={[Function]}
+            pointerEvents="box-none"
+            style={
+              {
+                "display": "contents",
+              }
+            }
+          >
+            <View>
+              <View
+                style={
+                  [
+                    {
+                      "alignSelf": "center",
+                      "borderRadius": 999,
+                      "height": 4,
+                      "marginBottom": 8,
+                      "width": 36,
+                    },
+                    {
+                      "backgroundColor": "#886363",
+                    },
+                  ]
+                }
+              />
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "minHeight": 48,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  maxFontSizeMultiplier={1.4}
+                  style={
+                    [
+                      {
+                        "fontFamily": "Sora_600SemiBold",
+                        "fontSize": 17,
+                        "lineHeight": 22,
+                      },
+                      {
+                        "color": "#361616",
+                      },
+                      {
+                        "flex": 1,
+                      },
+                    ]
+                  }
+                >
+                  Report
+                </Text>
+                <View
+                  style={
+                    {
+                      "marginLeft": "auto",
+                    }
+                  }
+                >
+                  <View
+                    accessibilityLabel="Close"
+                    accessibilityRole="button"
+                    accessibilityState={
+                      {
+                        "busy": undefined,
+                        "checked": undefined,
+                        "disabled": undefined,
+                        "expanded": undefined,
+                        "selected": undefined,
+                      }
+                    }
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
+                    accessible={true}
+                    collapsable={false}
+                    focusable={true}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      [
+                        {
+                          "alignItems": "center",
+                          "borderRadius": 999,
+                          "height": 48,
+                          "justifyContent": "center",
+                          "width": 48,
+                        },
+                        false,
+                        {
+                          "backgroundColor": "transparent",
+                        },
+                      ]
+                    }
+                  >
+                    <RNSVGSvgView
+                      align="xMidYMid"
+                      bbHeight={24}
+                      bbWidth={24}
+                      className="x-undefined__svg-icon-phosphor"
+                      color="#361616"
+                      fill="currentColor"
+                      focusable={false}
+                      height={24}
+                      meetOrSlice={0}
+                      minX={0}
+                      minY={0}
+                      style={
+                        [
+                          {
+                            "backgroundColor": "transparent",
+                            "borderWidth": 0,
+                          },
+                          [
+                            undefined,
+                            undefined,
+                            {},
+                          ],
+                          {
+                            "flex": 0,
+                            "height": 24,
+                            "width": 24,
+                          },
+                        ]
+                      }
+                      testID="phosphor-react-native-x-undefined"
+                      vbHeight={256}
+                      vbWidth={256}
+                      width={24}
+                    >
+                      <RNSVGGroup
+                        fill={
+                          {
+                            "type": 2,
+                          }
+                        }
+                        propList={
+                          [
+                            "fill",
+                          ]
+                        }
+                      >
+                        <RNSVGGroup
+                          fill={
+                            {
+                              "payload": 4281734678,
+                              "type": 0,
+                            }
+                          }
+                          propList={
+                            [
+                              "fill",
+                            ]
+                          }
+                        >
+                          <RNSVGPath
+                            d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128 50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
+                            fill={
+                              {
+                                "payload": 4278190080,
+                                "type": 0,
+                              }
+                            }
+                          />
+                        </RNSVGGroup>
+                      </RNSVGGroup>
+                    </RNSVGSvgView>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            accessibilityLabel="Fake profile"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "gap": 16,
+                  "minHeight": 56,
+                  "paddingHorizontal": 16,
+                },
+                false,
+              ]
+            }
+          >
+            <Text
+              maxFontSizeMultiplier={1.4}
+              style={
+                [
+                  {
+                    "fontFamily": "Outfit_400Regular",
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#361616",
+                  },
+                  {
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Fake profile
+            </Text>
+            <RNSVGSvgView
+              align="xMidYMid"
+              bbHeight={20}
+              bbWidth={20}
+              className="caret-right-undefined__svg-icon-phosphor"
+              color="#886363"
+              fill="currentColor"
+              focusable={false}
+              height={20}
+              meetOrSlice={0}
+              minX={0}
+              minY={0}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "borderWidth": 0,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                    {},
+                  ],
+                  {
+                    "flex": 0,
+                    "height": 20,
+                    "width": 20,
+                  },
+                ]
+              }
+              testID="phosphor-react-native-caret-right-undefined"
+              vbHeight={256}
+              vbWidth={256}
+              width={20}
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "type": 2,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              >
+                <RNSVGGroup
+                  fill={
+                    {
+                      "payload": 4287128419,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "fill",
+                    ]
+                  }
+                >
+                  <RNSVGPath
+                    d="m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32"
+                    fill={
+                      {
+                        "payload": 4278190080,
+                        "type": 0,
+                      }
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGSvgView>
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "height": 1,
+                    "left": 16,
+                    "position": "absolute",
+                    "right": 0,
+                  },
+                  {
+                    "backgroundColor": "#E9D2D2",
+                  },
+                ]
+              }
+            />
+          </View>
+          <View
+            accessibilityLabel="Inappropriate photos"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "gap": 16,
+                  "minHeight": 56,
+                  "paddingHorizontal": 16,
+                },
+                false,
+              ]
+            }
+          >
+            <Text
+              maxFontSizeMultiplier={1.4}
+              style={
+                [
+                  {
+                    "fontFamily": "Outfit_400Regular",
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  {
+                    "color": "#361616",
+                  },
+                  {
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Inappropriate photos
+            </Text>
+            <RNSVGSvgView
+              align="xMidYMid"
+              bbHeight={20}
+              bbWidth={20}
+              className="caret-right-undefined__svg-icon-phosphor"
+              color="#886363"
+              fill="currentColor"
+              focusable={false}
+              height={20}
+              meetOrSlice={0}
+              minX={0}
+              minY={0}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "borderWidth": 0,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                    {},
+                  ],
+                  {
+                    "flex": 0,
+                    "height": 20,
+                    "width": 20,
+                  },
+                ]
+              }
+              testID="phosphor-react-native-caret-right-undefined"
+              vbHeight={256}
+              vbWidth={256}
+              width={20}
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "type": 2,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              >
+                <RNSVGGroup
+                  fill={
+                    {
+                      "payload": 4287128419,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "fill",
+                    ]
+                  }
+                >
+                  <RNSVGPath
+                    d="m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32"
+                    fill={
+                      {
+                        "payload": 4278190080,
+                        "type": 0,
+                      }
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGSvgView>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`light theme Glass › Glass panels 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "borderRadius": 24,
+          "height": 180,
+          "justifyContent": "flex-end",
+          "overflow": "hidden",
+          "padding": 16,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "flexDirection": "row",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#A62625",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#C16867",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F80ED",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#D9822B",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F9E44",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#361616",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#A62625",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#C16867",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F80ED",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#D9822B",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F9E44",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#361616",
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "gap": 8,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "borderRadius": 16,
+              "flex": 1,
+              "padding": 16,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 16,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={45}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="light"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(251,244,244,.86)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 16,
+                  },
+                  {
+                    "borderColor": "rgba(54,22,22,.14)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.4}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_400Regular",
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#361616",
+                },
+                undefined,
+              ]
+            }
+          >
+            Glass
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "borderRadius": 16,
+              "flex": 1,
+              "padding": 16,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 16,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={45}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="light"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(251,244,244,.95)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 16,
+                  },
+                  {
+                    "borderColor": "rgba(54,22,22,.14)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.4}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_400Regular",
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "color": "#361616",
+                },
+                undefined,
+              ]
+            }
+          >
+            Glass deep
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`light theme Glass › Photo chips 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "borderRadius": 24,
+          "height": 180,
+          "justifyContent": "flex-end",
+          "overflow": "hidden",
+          "padding": 16,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "flexDirection": "row",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#A62625",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#C16867",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F80ED",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#D9822B",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F9E44",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#361616",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#A62625",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#C16867",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F80ED",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#D9822B",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#2F9E44",
+                },
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                {
+                  "flex": 1,
+                },
+                {
+                  "backgroundColor": "#361616",
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "gap": 8,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "borderRadius": 999,
+                "justifyContent": "center",
+                "minHeight": 32,
+                "paddingHorizontal": 12,
+              },
+              false,
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 999,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={40}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="light"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(255,255,255,.16)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 999,
+                  },
+                  {
+                    "borderColor": "rgba(255,255,255,.26)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.2}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_500Medium",
+                  "fontSize": 14,
+                  "lineHeight": 18,
+                },
+                {
+                  "color": "#361616",
+                },
+                {
+                  "color": "#FFF6F4",
+                },
+              ]
+            }
+          >
+            Hiking
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "borderRadius": 999,
+                "justifyContent": "center",
+                "minHeight": 32,
+                "paddingHorizontal": 12,
+              },
+              false,
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 999,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={40}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="light"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(255,255,255,.16)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 999,
+                  },
+                  {
+                    "borderColor": "rgba(255,255,255,.26)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.2}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_500Medium",
+                  "fontSize": 14,
+                  "lineHeight": 18,
+                },
+                {
+                  "color": "#361616",
+                },
+                {
+                  "color": "#FFF6F4",
+                },
+              ]
+            }
+          >
+            Live music
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "borderRadius": 999,
+                "justifyContent": "center",
+                "minHeight": 32,
+                "paddingHorizontal": 12,
+              },
+              false,
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 999,
+                },
+              ]
+            }
+          >
+            <View
+              blurMethod="dimezisBlurViewSdk31Plus"
+              blurReductionFactor={1}
+              intensity={40}
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              tint="light"
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(255,255,255,.16)",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  {
+                    "borderRadius": 999,
+                  },
+                  {
+                    "borderColor": "rgba(255,255,255,.26)",
+                    "borderWidth": 1,
+                  },
+                ]
+              }
+            />
+          </View>
+          <Text
+            maxFontSizeMultiplier={1.2}
+            style={
+              [
+                {
+                  "fontFamily": "Outfit_500Medium",
+                  "fontSize": 14,
+                  "lineHeight": 18,
+                },
+                {
+                  "color": "#361616",
+                },
+                {
+                  "color": "#FFF6F4",
+                },
+              ]
+            }
+          >
+            Coffee
+          </Text>
         </View>
       </View>
     </View>

@@ -21,6 +21,7 @@ import { useTheme } from '@/theme/useTheme';
 
 import { IconButton } from './Button';
 import { TOUCH, motion } from './constants';
+import { Frost } from './Frost';
 import { XIcon } from './icons';
 import { usePresence } from './presence';
 import { RaisedSurface } from './surface';
@@ -35,12 +36,14 @@ type Props = {
   visible: boolean;
   onClose: () => void;
   title?: string;
+  // Over a photo only: a --glass panel with an 18 point blur (2.5).
+  frosted?: boolean;
   children: ReactNode;
 };
 
 // Rises with a 320 ms spring; drag down, tap the scrim or press Close to dismiss. The Close
-// button is always there for switch users (6.2). Frosted glass arrives with FT-009.
-export function Sheet({ visible, onClose, title, children }: Props) {
+// button is always there for switch users (6.2).
+export function Sheet({ visible, onClose, title, frosted = false, children }: Props) {
   const { c } = useTheme();
   const insets = useSafeAreaInsets();
   const { height: screen } = useWindowDimensions();
@@ -99,7 +102,7 @@ export function Sheet({ visible, onClose, title, children }: Props) {
           style={[
             styles.panel,
             {
-              backgroundColor: c.raise,
+              backgroundColor: frosted ? undefined : c.raise,
               maxHeight: screen * MAX_SHARE,
               paddingBottom: space.lg + insets.bottom,
             },
@@ -107,12 +110,18 @@ export function Sheet({ visible, onClose, title, children }: Props) {
             panel,
           ]}
         >
+          {frosted && <Frost kind="glass" style={styles.corners} />}
           <GestureDetector gesture={pan}>
             <View>
               <View style={[styles.handle, { backgroundColor: c.muted }]} />
               <View style={styles.header}>
                 {title !== undefined && (
-                  <Text variant="h3" accessibilityRole="header" style={styles.title}>
+                  <Text
+                    variant="h3"
+                    color={frosted ? 'glasstext' : 'ink'}
+                    accessibilityRole="header"
+                    style={styles.title}
+                  >
                     {title}
                   </Text>
                 )}
@@ -141,6 +150,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: radius.xl,
     borderTopRightRadius: radius.xl,
   },
+  corners: { borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl },
   handle: { ...HANDLE, alignSelf: 'center', borderRadius: radius.pill, marginBottom: space.xs },
   header: { flexDirection: 'row', alignItems: 'center', minHeight: TOUCH },
   title: { flex: 1 },

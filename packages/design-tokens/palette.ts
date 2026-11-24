@@ -81,10 +81,15 @@ export const photo = {
   chip: 'rgba(255,255,255,.16)',
   chipBlur: 16,
   chipEdge: 'rgba(255,255,255,.26)',
+  // 2.8 (FE-23): the solid tint over the photo shade where blur is off or slow.
+  chipFallback: 'rgba(255,255,255,.24)',
   tag: 'rgba(255,255,255,.9)',
   shade: 'rgba(16,8,6,.28)',
   splashRed: '#A62625',
 } as const;
+
+// Colour Palette: glass panels (--glass, --glassdeep) blur by 18 points.
+export const glassBlur = 18;
 
 // 2.5: gradients. Locations are 0 to 1; the like heart's middle stop sits at 55%.
 export const gradient = {
