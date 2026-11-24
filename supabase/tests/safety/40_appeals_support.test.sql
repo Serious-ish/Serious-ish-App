@@ -113,6 +113,7 @@ select is((select count(*)::int from public.appeals), 0,
   'members cannot see other members'' appeals');
 
 -- Support ---------------------------------------------------------------------------------
+set local role postgres;
 select pg_temp.act_as('00000000-0000-0000-0000-0000000000a6');
 select lives_ok($$ select public.request_support('deletion_query', 'When is my data erased?') $$,
   'a deleted member can contact support');
@@ -128,6 +129,7 @@ select throws_ok($$ select public.request_support('refund', 'Money back') $$, 'P
 select throws_ok($$ select public.request_support('other', '  ') $$, 'PT422', 'INVALID_REQUEST',
   'an empty request is refused');
 
+set local role postgres;
 select pg_temp.act_as('00000000-0000-0000-0000-0000000000a7');
 select throws_ok($$ select public.request_support('other', 'Hi') $$, 'PT403', 'NOT_ALLOWED',
   'staff are not members and cannot use the member route');
