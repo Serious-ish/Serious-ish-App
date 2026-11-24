@@ -1,7 +1,7 @@
-import { ErrorState } from '@/components/ui/ErrorState';
+import { Notice } from '@/components/patterns/Notice';
 import { en } from '@/i18n/en';
 
-// A blocking screen with no tabs (Frontend Specification 7.1, 7.2): error R03.
-export default function Page() {
-  return <ErrorState message={en.errors.R03} />;
+// held (Frontend Specification 7.2): a report is being reviewed. Error R03.
+export default function HoldNotice() {
+  return <Notice message={en.errors.R03} body={en.notices.heldBlocked} appeal />;
 }

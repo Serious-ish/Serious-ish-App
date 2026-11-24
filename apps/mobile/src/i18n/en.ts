@@ -35,6 +35,28 @@ export const en = {
     paused: 'Your profile is hidden',
   },
 
+  // The hold, restricted and deletion notices and their appeal and support path (FT-046). The
+  // headline of each notice is its error message (R03, A18, X03). Draft copy for the founder's
+  // review before beta (FE-04).
+  notices: {
+    heldBlocked:
+      'Until the review ends, you can’t use Discover, swipe, get new matches or send new messages.',
+    restrictedBlocked: 'You can’t use Discover, chats or events, or upgrade your plan.',
+    deletedBody:
+      'We’ve received your request to delete your account. To ask about it or about your data, contact support.',
+    appeal: 'Appeal',
+    contactSupport: 'Contact support',
+    appealIntro: 'Tell us why we should look at this decision again.',
+    appealLabel: 'Your appeal',
+    appealSend: 'Send appeal',
+    appealSent: 'We’ve got your appeal and will review it.',
+    supportIntro: 'Tell us what you need help with.',
+    supportLabel: 'Your message',
+    supportSend: 'Send',
+    supportSent: 'Thanks. Our support team has your message.',
+    done: 'Done',
+  },
+
   // Security & Access v1.3, section 06: the message for each error ID. null means the failure
   // is handled silently. Draft copy for the founder's review before beta (FE-04).
   errors: {

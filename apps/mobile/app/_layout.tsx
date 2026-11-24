@@ -129,6 +129,13 @@ function GatedStack() {
         <Stack.Protected guard={open('deleted')}>
           <Stack.Screen name="deleted" />
         </Stack.Protected>
+        {/* The appeal and support path pushes over its notice (FT-046). */}
+        <Stack.Protected guard={open('hold') || open('restricted')}>
+          <Stack.Screen name="appeal" />
+        </Stack.Protected>
+        <Stack.Protected guard={open('hold') || open('restricted') || open('deleted')}>
+          <Stack.Screen name="support" />
+        </Stack.Protected>
         <Stack.Protected guard={open('age-blocked')}>
           <Stack.Screen name="age-blocked" />
         </Stack.Protected>
