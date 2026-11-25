@@ -1,10 +1,12 @@
 import * as Sentry from '@sentry/react-native';
 import { z } from 'zod';
 
-import { ApiError, edge, rpc, setSession } from './api';
+import { ApiError, edge, newRequestId, rpc, setSession, syncServerClock } from './api';
 import { describeError } from './errorCatalog';
+import { resetServerClock, serverNow } from './serverClock';
 
 jest.mock('@sentry/react-native', () => ({ captureMessage: jest.fn(), init: jest.fn() }));
+jest.mock('expo-crypto', () => ({ randomUUID: jest.requireActual('node:crypto').randomUUID }));
 
 // Frontend Specification 8.4 (the status table) and 9.2 (timeouts and retries), with mocked replies.
 
@@ -215,5 +217,75 @@ describe('what reaches the screen', () => {
     );
     await settle(rpc('add_photo', {}, write));
     expect(Sentry.captureMessage).not.toHaveBeenCalled();
+  });
+});
+
+// FT-006: the server's clock and one request ID per action.
+describe('server time and request IDs', () => {
+  const SERVER = Date.parse('2026-11-24T20:00:00Z');
+  const DAY = 24 * 60 * 60_000;
+  const date = (ms: number) => ({ date: new Date(ms).toUTCString() });
+  // How far the phone's clock is from the server clock the app has learned. Retries let fake time
+  // run on, which moves both clocks together, so this stays put while time passes.
+  const skew = () => Date.now() - serverNow();
+
+  beforeEach(() => {
+    resetServerClock();
+    // The phone's clock is a day ahead of the server.
+    jest.setSystemTime(SERVER + DAY);
+  });
+
+  it('every reply sets the server clock from its Date header', async () => {
+    fetchMock.mockResolvedValue(reply({ status: 200, body: { ok: true }, headers: date(SERVER) }));
+    await rpc('get_profile', {}, read);
+    expect(Math.abs(skew() - DAY)).toBeLessThanOrEqual(1_000);
+  });
+
+  it('error replies count too', async () => {
+    fetchMock.mockResolvedValue(
+      reply({
+        status: 409,
+        body: { code: 'PT409', message: 'POSITION_TAKEN' },
+        headers: date(SERVER),
+      }),
+    );
+    await settle(rpc('add_photo', {}, write));
+    expect(Math.abs(skew() - DAY)).toBeLessThanOrEqual(1_000);
+  });
+
+  it('after a dropped connection, the first reply sets the clock afresh', async () => {
+    fetchMock.mockResolvedValueOnce(
+      reply({ status: 200, body: { ok: true }, headers: date(SERVER) }),
+    );
+    await rpc('get_profile', {}, read);
+    // Offline, then back: the server is an hour on, though the monotonic clock paused meanwhile.
+    fetchMock
+      .mockRejectedValueOnce(new TypeError('Network request failed'))
+      .mockImplementationOnce(async () =>
+        reply({ status: 200, body: { ok: true }, headers: date(serverNow() + 60 * 60_000) }),
+      );
+    await settle(rpc('get_profile', {}, read));
+    expect(Math.abs(skew() - (DAY - 60 * 60_000))).toBeLessThanOrEqual(1_000);
+  });
+
+  it('syncServerClock reads server_time to the millisecond', async () => {
+    fetchMock.mockResolvedValue(
+      reply({ status: 200, body: '2026-11-24T20:00:00.123456+00:00', headers: date(SERVER) }),
+    );
+    await syncServerClock();
+    expect(fetchMock.mock.calls[0][0]).toMatch(/\/rest\/v1\/rpc\/server_time$/);
+    expect(Math.abs(serverNow() - (SERVER + 123))).toBeLessThanOrEqual(1);
+  });
+
+  it('each action gets its own request ID, and its retries reuse it', async () => {
+    const first = newRequestId();
+    expect(first).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    expect(newRequestId()).not.toBe(first);
+    fetchMock
+      .mockResolvedValueOnce(reply({ status: 503 }))
+      .mockResolvedValueOnce(reply({ status: 200, body: { ok: true } }));
+    await settle(rpc('record_swipe', { target_id: 'x' }, { ...write, requestId: first }));
+    const sent = fetchMock.mock.calls.map(([, init]) => JSON.parse(init.body).client_request_id);
+    expect(sent).toEqual([first, first]);
   });
 });

@@ -3,7 +3,7 @@
 // what only the storage service enforces: file size, file type, link expiry and the
 // location-stripping step, plus the photo-links Edge Function when it is being served.
 //
-// Run with `pnpm db:test:storage` while the local stack is running (`pnpm db:start`).
+// Run with `pnpm db:test:api` while the local stack is running (`pnpm db:start`).
 
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';

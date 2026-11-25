@@ -1,10 +1,12 @@
 import Constants from 'expo-constants';
-import type { z } from 'zod';
+import { randomUUID } from 'expo-crypto';
+import { z } from 'zod';
 
 import { env } from '@/config/env';
 
 import { isKnownCode } from './errorCatalog';
 import { reportUnknownCode } from './sentry';
+import { markClockStale, noteDateHeader, noteServerTime } from './serverClock';
 
 // The one door to the server (Frontend Specification 8.3, 8.4 and 9.2). Screens never call the
 // network; each feature's api/ folder calls rpc() or edge() with a Zod schema for the reply and
@@ -53,6 +55,19 @@ export const rpc = <T>(name: string, args: object, options: CallOptions<T>) =>
 export const edge = <T>(name: string, body: object, options: CallOptions<T>) =>
   call(`/functions/v1/${name}`, body, options);
 
+// One ID per tap or message, made when the person acts and passed as requestId on every retry
+// of that action, so the server acts on it once (FT-006; TRD 5 "Matching and chat").
+export const newRequestId = (): string => randomUUID();
+
+// Sets the server clock to the millisecond (FT-006). Every reply already keeps it right to
+// about a second; screens that count down to a deadline call this when they open.
+export async function syncServerClock(): Promise<void> {
+  const sentAt = performance.now();
+  const time = await rpc('server_time', {}, { schema: z.string(), kind: 'read' });
+  // Postgres gives microseconds; keep milliseconds, which every JavaScript engine parses.
+  noteServerTime(Date.parse(time.replace(/(\.\d{3})\d+/, '$1')), 1, sentAt, performance.now());
+}
+
 // A read straight from a table, protected by row-level security (9.4), e.g.
 // read('members', 'select=status', schema).
 export const read = <T>(table: string, query: string, schema: z.ZodType<T>) =>
@@ -95,6 +110,7 @@ async function send<T>(path: string, body: object | null, options: CallOptions<T
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), options.timeoutMs ?? TIMEOUT_MS);
   const token = session.accessToken();
+  const sentAt = performance.now();
   try {
     const res = await fetch(env.supabaseUrl + path, {
       method: body ? 'POST' : 'GET',
@@ -107,6 +123,7 @@ async function send<T>(path: string, body: object | null, options: CallOptions<T
       ...(body && { body: JSON.stringify(body) }),
       signal: controller.signal,
     });
+    noteDateHeader(res.headers.get('date'), sentAt, performance.now());
     const ref = res.headers.get('sb-request-id') ?? res.headers.get('x-request-id');
     const reply: unknown = await res.json().catch(() => null);
     if (!res.ok) throw new ApiError(fixedCode(reply), res.status, retryAfter(res), ref);
@@ -115,6 +132,8 @@ async function send<T>(path: string, body: object | null, options: CallOptions<T
     return parsed.data;
   } catch (thrown) {
     if (thrown instanceof ApiError) throw thrown;
+    // No reply: the connection may have dropped, so the next reply resets the server clock.
+    markClockStale();
     throw new ApiError(controller.signal.aborted ? 'TIMEOUT' : 'OFFLINE', null);
   } finally {
     clearTimeout(timer);

@@ -25,6 +25,9 @@ export const catalog = {
   // Only a bug in the app can send these, so the person sees the general server message.
   INVALID_REQUEST: { id: 'G02', show: 'screen' },
   METHOD_NOT_ALLOWED: { id: 'G02', show: 'screen' },
+  // A write sent without its request ID, or one ID reused for a different action (FT-006).
+  REQUEST_ID_REQUIRED: { id: 'G02', show: 'screen' },
+  REQUEST_ID_REUSED: { id: 'G02', show: 'screen' },
 
   // Photos (FT-007)
   MIN_PHOTOS: { id: 'P08', show: 'banner' },

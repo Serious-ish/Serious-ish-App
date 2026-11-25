@@ -77,13 +77,13 @@ The schema is the 37 tables from TRD 4, built by the dated files in `supabase/mi
 Every table has row level security on; signed-out requests can do nothing, members can only
 read their own rows and allowed columns, and all writes go through database functions.
 
-| Command                | What it does                                                                                |
-| ---------------------- | ------------------------------------------------------------------------------------------- |
-| `pnpm db:start`        | Starts the local database and applies every migration                                       |
-| `pnpm db:reset`        | Rebuilds the local database from scratch: migrations, then `supabase/seed.sql`              |
-| `pnpm db:test`         | Runs the access-rule and audit tests in `supabase/tests` (pgTAP)                            |
-| `pnpm db:test:storage` | Runs the photo storage tests against the running local stack (`supabase/tests/storage-api`) |
-| `pnpm db:types`        | Regenerates `packages/shared/src/types/database.generated.ts`                               |
+| Command            | What it does                                                                                              |
+| ------------------ | --------------------------------------------------------------------------------------------------------- |
+| `pnpm db:start`    | Starts the local database and applies every migration                                                     |
+| `pnpm db:reset`    | Rebuilds the local database from scratch: migrations, then `supabase/seed.sql`                            |
+| `pnpm db:test`     | Runs the access-rule and audit tests in `supabase/tests` (pgTAP)                                          |
+| `pnpm db:test:api` | Runs the photo storage and duplicate-request tests against the running local stack (`supabase/tests/api`) |
+| `pnpm db:types`    | Regenerates `packages/shared/src/types/database.generated.ts`                                             |
 
 ### Photo storage
 
@@ -97,6 +97,22 @@ holds and inactive members.
 
 If `pnpm db:start` skips storage on a machine that was linked to a hosted project, delete
 `supabase/.temp/storage-version`: it holds the hosted storage version, which is not published.
+
+### Server time and duplicate requests
+
+The server's clock is the only one that counts (FT-006). Deadlines are stored in UTC and
+checked in the database; the app draws countdowns with `serverNow()` and `timeLeftMs()` from
+`apps/mobile/src/lib/serverClock.ts`, which every reply's `Date` header keeps in step (and
+`syncServerClock()` sets to the millisecond through `server_time()`). Changing the phone's clock
+or time zone never moves a countdown. Daily limits reset at midnight and weekly SuperLikes at
+Monday midnight in `app_config.daily_quota_timezone` (America/Toronto), from
+`private.quota_period`.
+
+Every swipe and message carries a `client_request_id`, made once per tap with
+`newRequestId()` and reused on each retry. A function that writes one starts with
+`private.lock_request(member, request_id)`, then returns the stored result if that ID was
+already used, so a double tap or a retry after a timeout acts once and charges one limit. The
+pattern is written out at the top of `20261125000100_server_time_requests.sql`.
 
 Rules for database changes (TRD 3.2, Security 4):
 
