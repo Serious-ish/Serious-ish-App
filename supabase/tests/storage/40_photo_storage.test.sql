@@ -1,6 +1,6 @@
 -- Private photo storage and photo visibility (FT-007 acceptance criteria; Security & Access
 -- 4.9, 5.3; edge cases P13, N17). Upload size, file type and link expiry are enforced by the
--- storage service itself and are tested against it in supabase/tests/storage-api.
+-- storage service itself and are tested against it in supabase/tests/api.
 begin;
 -- Run as the database owner everywhere (hosted projects connect with a separate CLI login role).
 set local role postgres;

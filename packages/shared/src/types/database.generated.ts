@@ -875,6 +875,9 @@ isOneToOne: false
 "request_support":
 { Args: { "p_details": string,"p_type": string }; Returns: string
                            },
+"server_time":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
 "submit_appeal":
 { Args: { "p_message": string }; Returns: string
                            }

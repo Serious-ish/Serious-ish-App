@@ -123,9 +123,10 @@ jobs:
           git diff --exit-code -- packages/shared/src/types/database.generated.ts \
             || { echo "Run 'pnpm db:types' and commit the result."; exit 1; }
 
-      # File size, file type, link expiry and location stripping, against the real storage service.
-      - name: Storage tests
-        run: pnpm db:test:storage
+      # Against the running stack: photo file size, file type, link expiry and location
+      # stripping, and duplicate requests arriving at the same moment.
+      - name: API tests
+        run: pnpm db:test:api
 
   pr-title:
     name: Pull request title
