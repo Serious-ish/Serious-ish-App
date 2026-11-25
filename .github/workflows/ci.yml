@@ -106,6 +106,13 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      # Throwaway webhook secrets for this run only, read by the local Edge Functions and by the
+      # webhook contract tests. Never real values, and never committed.
+      - name: Webhook test secrets
+        run: |
+          printf 'REVENUECAT_WEBHOOK_AUTH=Bearer ci-%s\nVERIFICATION_WEBHOOK_SECRET=ci-%s\n' \
+            "$(openssl rand -hex 24)" "$(openssl rand -hex 24)" > supabase/functions/.env
+
       # Applies every migration to an empty database, the same way staging and production do,
       # and starts the services the storage tests need (sign-in, API, storage, Edge Functions).
       - name: Start the local backend and apply migrations
@@ -124,7 +131,8 @@ jobs:
             || { echo "Run 'pnpm db:types' and commit the result."; exit 1; }
 
       # Against the running stack: photo file size, file type, link expiry and location
-      # stripping, and duplicate requests arriving at the same moment.
+      # stripping, duplicate requests arriving at the same moment, and the webhook contract
+      # tests with signed sample events.
       - name: API tests
         run: pnpm db:test:api
 

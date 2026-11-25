@@ -315,6 +315,14 @@ deno_version = 2
 # [edge_runtime.secrets]
 # secret_key = "env(SECRET_VALUE)"
 
+# Webhooks from RevenueCat and the age-check vendor (FT-010). They carry no member token, so
+# Supabase's sign-in check is off; each function proves the sender with its own secret instead.
+[functions.revenuecat-webhook]
+verify_jwt = false
+
+[functions.verification-webhook]
+verify_jwt = false
+
 [analytics]
 enabled = true
 port = 54327

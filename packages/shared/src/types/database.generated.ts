@@ -65,14 +65,14 @@ isOneToOne: false
                   ]
                 },"audit_log": {
                   Row: {
-                    "action": string,"actor_staff_id": string,"created_at": string,"id": string,"metadata": NonNullable<Json>,"report_id": string | null,"subject_id": string,"subject_type": string
+                    "action": string,"actor_service": string | null,"actor_staff_id": string | null,"created_at": string,"id": string,"metadata": NonNullable<Json>,"report_id": string | null,"subject_id": string,"subject_type": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "action": string,"actor_staff_id": string,"created_at"?: string,"id"?: string,"metadata"?: NonNullable<Json>,"report_id"?: string | null,"subject_id": string,"subject_type": string
+                    "action": string,"actor_service"?: string | null,"actor_staff_id"?: string | null,"created_at"?: string,"id"?: string,"metadata"?: NonNullable<Json>,"report_id"?: string | null,"subject_id": string,"subject_type": string
                   }
                   Update: {
-                    "action"?: string,"actor_staff_id"?: string,"created_at"?: string,"id"?: string,"metadata"?: NonNullable<Json>,"report_id"?: string | null,"subject_id"?: string,"subject_type"?: string
+                    "action"?: string,"actor_service"?: string | null,"actor_staff_id"?: string | null,"created_at"?: string,"id"?: string,"metadata"?: NonNullable<Json>,"report_id"?: string | null,"subject_id"?: string,"subject_type"?: string
                   }
                   Relationships: [
                     {
@@ -841,14 +841,14 @@ isOneToOne: false
                   ]
                 },"webhook_events": {
                   Row: {
-                    "error_code": string | null,"id": string,"payload_hash": string,"processed_at": string | null,"provider": string,"provider_event_id": string,"received_at": string,"status": string
+                    "error_code": string | null,"event_type": string,"id": string,"occurred_at": string,"payload_hash": string,"processed_at": string | null,"provider": string,"provider_event_id": string,"received_at": string,"status": string,"subject": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "error_code"?: string | null,"id"?: string,"payload_hash": string,"processed_at"?: string | null,"provider": string,"provider_event_id": string,"received_at"?: string,"status"?: string
+                    "error_code"?: string | null,"event_type": string,"id"?: string,"occurred_at": string,"payload_hash": string,"processed_at"?: string | null,"provider": string,"provider_event_id": string,"received_at"?: string,"status"?: string,"subject": string
                   }
                   Update: {
-                    "error_code"?: string | null,"id"?: string,"payload_hash"?: string,"processed_at"?: string | null,"provider"?: string,"provider_event_id"?: string,"received_at"?: string,"status"?: string
+                    "error_code"?: string | null,"event_type"?: string,"id"?: string,"occurred_at"?: string,"payload_hash"?: string,"processed_at"?: string | null,"provider"?: string,"provider_event_id"?: string,"received_at"?: string,"status"?: string,"subject"?: string
                   }
                   Relationships: [
                     
@@ -868,6 +868,9 @@ isOneToOne: false
 { Args: { "p_photo_ids": (string)[] }; Returns: {
               "photo_id": string,"storage_path": string
             }[]
+                           },
+"receive_webhook_event":
+{ Args: { "p_event_id": string,"p_event_type": string,"p_occurred_at": string,"p_payload_hash": string,"p_provider": string,"p_subject": string }; Returns: string
                            },
 "remove_photo":
 { Args: { "p_photo_id": string }; Returns: undefined
