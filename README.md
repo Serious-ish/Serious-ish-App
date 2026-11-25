@@ -77,13 +77,13 @@ The schema is the 37 tables from TRD 4, built by the dated files in `supabase/mi
 Every table has row level security on; signed-out requests can do nothing, members can only
 read their own rows and allowed columns, and all writes go through database functions.
 
-| Command            | What it does                                                                                              |
-| ------------------ | --------------------------------------------------------------------------------------------------------- |
-| `pnpm db:start`    | Starts the local database and applies every migration                                                     |
-| `pnpm db:reset`    | Rebuilds the local database from scratch: migrations, then `supabase/seed.sql`                            |
-| `pnpm db:test`     | Runs the access-rule and audit tests in `supabase/tests` (pgTAP)                                          |
-| `pnpm db:test:api` | Runs the photo storage and duplicate-request tests against the running local stack (`supabase/tests/api`) |
-| `pnpm db:types`    | Regenerates `packages/shared/src/types/database.generated.ts`                                             |
+| Command            | What it does                                                                                                                |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm db:start`    | Starts the local database and applies every migration                                                                       |
+| `pnpm db:reset`    | Rebuilds the local database from scratch: migrations, then `supabase/seed.sql`                                              |
+| `pnpm db:test`     | Runs the access-rule and audit tests in `supabase/tests` (pgTAP)                                                            |
+| `pnpm db:test:api` | Runs the photo storage, duplicate-request and webhook contract tests against the running local stack (`supabase/tests/api`) |
+| `pnpm db:types`    | Regenerates `packages/shared/src/types/database.generated.ts`                                                               |
 
 ### Photo storage
 
@@ -113,6 +113,27 @@ Every swipe and message carries a `client_request_id`, made once per tap with
 `private.lock_request(member, request_id)`, then returns the stored result if that ID was
 already used, so a double tap or a retry after a timeout acts once and charges one limit. The
 pattern is written out at the top of `20261125000100_server_time_requests.sql`.
+
+### Webhooks
+
+RevenueCat and the age-check vendor call `revenuecat-webhook` and `verification-webhook`
+(FT-010). Both run the one pipeline in `supabase/functions/_shared/webhook.ts`: prove the
+sender first (RevenueCat's Authorization header must equal `REVENUECAT_WEBHOOK_AUTH`; the
+vendor's `X-Signature` must be an HMAC of the body made within 5 minutes with
+`VERIFICATION_WEBHOOK_SECRET`), then hand the event to `public.receive_webhook_event`. That
+records each (provider, event ID) once, never applies an event more than a day old or older
+than one already applied for the same member or session (it queues a state check in
+`private.webhook_reconcile_requests` instead), and writes one audit entry per event. Supabase's
+sign-in check is off for both functions, so a member's token never counts as proof. Bodies are
+never logged or stored; the database keeps a SHA-256 fingerprint.
+
+The vendor's signature format is a placeholder until the vendor contract (FD-002) confirms it;
+only `_shared/webhook-providers.ts` changes then. What each event changes arrives with plans
+(FT-056) and the age check (FT-019) in `private.apply_webhook_event`.
+
+To deploy, set both secrets with `pnpm exec supabase secrets set --remote=<ref>`, then
+`pnpm exec supabase functions deploy revenuecat-webhook verification-webhook --remote=<ref>`.
+Locally, `supabase/functions/.env` needs test values for both (at least 32 characters).
 
 Rules for database changes (TRD 3.2, Security 4):
 

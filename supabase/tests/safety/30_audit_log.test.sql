@@ -102,9 +102,12 @@ set local role authenticated;
 select is((select count(*)::int from public.audit_log), 0, 'a member cannot read the audit log');
 set local role postgres;
 
+-- Server services (webhooks, FT-010) also write entries, so compare with every row there is.
+select set_config('test.audit_total', (select count(*) from public.audit_log)::text, true);
 select pg_temp.claims('00000000-0000-0000-0000-0000000000f2', 'aal2');
 set local role authenticated;
-select is((select count(*)::int from public.audit_log), 1, 'an admin with a verified second factor reads all entries');
+select is((select count(*)::int from public.audit_log), current_setting('test.audit_total')::int,
+  'an admin with a verified second factor reads all entries');
 set local role postgres;
 
 -- moderator_actions: append-only, except filling in a notification time once ------------
