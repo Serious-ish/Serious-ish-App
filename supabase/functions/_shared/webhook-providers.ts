@@ -10,25 +10,44 @@ import {
 
 const MIN_SECRET_LENGTH = 32;
 
-function requireSecret(name: string, value: string | undefined): string {
-  if (!value || value.length < MIN_SECRET_LENGTH) {
+// The random part must be long enough. For a header value such as "Bearer <random>", the
+// scheme in front does not count.
+function requireSecret(name: string, value: string | undefined, scheme = false): string {
+  const random = scheme ? (value ?? '').replace(/^[A-Za-z]+ +/, '') : (value ?? '');
+  if (random.length < MIN_SECRET_LENGTH) {
     throw new Error(
-      `${name} must be set to a random value of at least ${MIN_SECRET_LENGTH} characters`,
+      `${name} must be set to a random value of at least ${MIN_SECRET_LENGTH} characters` +
+        (scheme ? ' (not counting a scheme such as "Bearer ")' : ''),
     );
   }
-  return value;
+  return value!;
 }
 
 const text = (value: unknown): string | null =>
   typeof value === 'string' && value.trim() !== '' && value.length <= 200 ? value : null;
+
+const texts = (value: unknown): string[] =>
+  Array.isArray(value) ? value.map(text).filter((v): v is string => v !== null) : [];
+
+// The app logs in to RevenueCat with the member's ID (FT-056), so a member's app user ID is a
+// UUID; an anonymous one ($RCAnonymousID:...) is not.
+const MEMBER_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// receive_webhook_event refuses more than this; an event naming more is not one we understand.
+const MAX_ALSO_AFFECTS = 20;
 
 // RevenueCat ---------------------------------------------------------------------------------
 // RevenueCat sends the Authorization header value set in its dashboard with every webhook.
 // REVENUECAT_WEBHOOK_AUTH holds exactly that value (for example "Bearer <random>").
 // Body: { api_version, event: { id, type, app_user_id, event_timestamp_ms, ... } }.
 // The subject is the member: the app logs in to RevenueCat with the member's ID (FT-056).
+// A TRANSFER has no app_user_id and is sent once, not once per member: the purchase moves from
+// the app users in transferred_from to those in transferred_to. The subject is the receiving
+// member, and every other app user named is passed on as alsoAffects, so each one's current
+// state is checked (FT-058). A restore by a different member on the same store account arrives
+// as a TRANSFER too (FT-060).
 export function revenueCat(authValue: string | undefined): ProviderSettings {
-  const expected = requireSecret('REVENUECAT_WEBHOOK_AUTH', authValue);
+  const expected = requireSecret('REVENUECAT_WEBHOOK_AUTH', authValue, true);
   return {
     provider: 'revenuecat',
     authenticate: async (req) => timingSafeEqual(req.headers.get('authorization') ?? '', expected),
@@ -37,13 +56,19 @@ export function revenueCat(authValue: string | undefined): ProviderSettings {
       if (!event || typeof event !== 'object') return null;
       const id = text(event.id);
       const type = text(event.type);
-      // A transfer moves a purchase between app users and names them in transferred_to.
-      const transferredTo = Array.isArray(event.transferred_to) ? event.transferred_to[0] : null;
+      const to = texts(event.transferred_to);
+      const from = texts(event.transferred_from);
       const subject =
-        text(event.app_user_id) ?? text(event.original_app_user_id) ?? text(transferredTo);
+        text(event.app_user_id) ??
+        text(event.original_app_user_id) ??
+        to.find((user) => MEMBER_ID.test(user)) ??
+        to[0] ??
+        null;
+      const alsoAffects = [...new Set([...from, ...to])].filter((user) => user !== subject);
       const at = event.event_timestamp_ms;
       if (!id || !type || !subject || typeof at !== 'number' || !Number.isFinite(at)) return null;
-      return { id, type, subject, occurredAt: new Date(at) } satisfies WebhookEvent;
+      if (alsoAffects.length > MAX_ALSO_AFFECTS) return null;
+      return { id, type, subject, occurredAt: new Date(at), alsoAffects } satisfies WebhookEvent;
     },
   };
 }

@@ -10,13 +10,13 @@ select set_config('search_path', concat_ws(', ', 'public', 'extensions',
   (select n.nspname from pg_extension e join pg_namespace n on n.oid = e.extnamespace
     where e.extname = 'pgtap')), true);
 
-select plan(26);
+select plan(39);
 
 -- Who can reach what ---------------------------------------------------------------------------
 select ok(
-  has_function_privilege('service_role', 'public.receive_webhook_event(text, text, text, text, timestamptz, text)', 'EXECUTE')
-    and not has_function_privilege('authenticated', 'public.receive_webhook_event(text, text, text, text, timestamptz, text)', 'EXECUTE')
-    and not has_function_privilege('anon', 'public.receive_webhook_event(text, text, text, text, timestamptz, text)', 'EXECUTE'),
+  has_function_privilege('service_role', 'public.receive_webhook_event(text, text, text, text, timestamptz, text, text[])', 'EXECUTE')
+    and not has_function_privilege('authenticated', 'public.receive_webhook_event(text, text, text, text, timestamptz, text, text[])', 'EXECUTE')
+    and not has_function_privilege('anon', 'public.receive_webhook_event(text, text, text, text, timestamptz, text, text[])', 'EXECUTE'),
   'only the server key can hand in a webhook event; a member cannot forward one'
 );
 select ok(
@@ -115,6 +115,46 @@ select is(
 );
 select is(pg_temp.receive('revenuecat', 'evt-5', 'member-3', now() - interval '2 days'),
   'duplicate', 'a stale event delivered again is a duplicate');
+select is(
+  (select string_agg(a.action, ',') from public.audit_log a
+     join public.webhook_events e on e.id = a.subject_id where e.provider_event_id = 'evt-5'),
+  'webhook.stale', 'a stale event is audited once'
+);
+
+-- Transfers: one event, several members --------------------------------------------------------
+-- RevenueCat sends a TRANSFER once, about the receiving member; the members who lose the
+-- purchase come in p_also_affects.
+create function pg_temp.transfer(p_event text, p_to text, p_at timestamptz, p_others text[])
+returns text language sql as $$
+  select public.receive_webhook_event('revenuecat', p_event, 'TRANSFER', p_to, p_at,
+                                      repeat('a', 64), p_others);
+$$;
+select is(pg_temp.transfer('evt-t1', 'member-4', now() - interval '5 minutes',
+                           array['member-5', 'member-6', 'member-4']),
+  'processed', 'a transfer is applied to the member who receives the purchase');
+select is(
+  (select string_agg(subject || ':' || reason, ',' order by subject)
+     from private.webhook_reconcile_requests
+    where provider = 'revenuecat' and subject in ('member-4', 'member-5', 'member-6')),
+  'member-5:transfer,member-6:transfer',
+  'and every other member it names gets a check of their current state'
+);
+select is(pg_temp.transfer('evt-t2', 'member-7', now() - interval '2 days', array['member-8']),
+  'stale', 'a transfer more than a day old is not applied');
+select is(
+  (select reason from private.webhook_reconcile_requests
+    where provider = 'revenuecat' and subject = 'member-8'),
+  'transfer', 'but the member who lost the purchase is still checked'
+);
+select throws_ok(
+  $$ select pg_temp.transfer('evt-t3', 'member-4', now(),
+       (select array_agg('member-x' || i) from generate_series(1, 21) i)) $$,
+  'PT422', 'INVALID_REQUEST', 'an event naming more than 20 other members is refused'
+);
+select throws_ok(
+  $$ select pg_temp.transfer('evt-t3', 'member-4', now(), array[' ']) $$,
+  'PT422', 'INVALID_REQUEST', 'an empty member in the list is refused'
+);
 
 -- Audit entries name exactly one actor ------------------------------------------------------------
 select throws_ok(
@@ -127,6 +167,39 @@ select throws_ok(
      values ('Webhook RevenueCat', 'test', 'test', gen_random_uuid()) $$,
   '23514', null, 'a service actor must be a fixed name such as webhook:revenuecat'
 );
+select throws_ok(
+  $$ insert into public.audit_log (actor_staff_id, actor_service, action, subject_type, subject_id)
+     values (gen_random_uuid(), 'webhook:revenuecat', 'test', 'test', gen_random_uuid()) $$,
+  '23514', null, 'an audit entry cannot name both a staff member and a service'
+);
+
+-- An event that cannot be applied is kept ----------------------------------------------------
+-- Stand in for a future apply step that fails (FT-056, FT-019). Rolled back with the rest.
+create or replace function private.apply_webhook_event(
+  p_event_id uuid, p_provider text, p_event_type text, p_subject text
+) returns void language plpgsql security definer set search_path = '' as $$
+begin
+  raise exception 'cannot apply: card 4111 1111 1111 1111' using errcode = 'P0001';
+end;
+$$;
+select is(pg_temp.receive('revenuecat', 'evt-f1', 'member-9', now() - interval '1 minute'),
+  'failed', 'an event that cannot be applied is kept, not lost after the provider stops retrying');
+select is(
+  (select status || ':' || error_code from public.webhook_events where provider_event_id = 'evt-f1'),
+  'failed:P0001', 'it is recorded as failed with the error code only, never the message'
+);
+select is(
+  (select reason from private.webhook_reconcile_requests
+    where provider = 'revenuecat' and subject = 'member-9'),
+  'apply_failed', 'and its member gets a check of their current state'
+);
+select is(
+  (select string_agg(a.action, ',') from public.audit_log a
+     join public.webhook_events e on e.id = a.subject_id where e.provider_event_id = 'evt-f1'),
+  'webhook.failed', 'it is audited once'
+);
+select is(pg_temp.receive('revenuecat', 'evt-f1', 'member-9', now() - interval '1 minute'),
+  'duplicate', 'delivered again, it changes nothing more');
 
 select * from finish();
 rollback;

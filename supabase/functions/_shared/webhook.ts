@@ -17,13 +17,16 @@
 // Runtime-neutral (Web Crypto, Request, Response), so the contract tests run it under Node.
 
 export type Provider = 'revenuecat' | 'age_check';
-export type Outcome = 'processed' | 'duplicate' | 'superseded' | 'stale';
+export type Outcome = 'processed' | 'duplicate' | 'superseded' | 'stale' | 'failed';
 
 export type WebhookEvent = {
   id: string;
   type: string;
   subject: string;
   occurredAt: Date;
+  // Other members or sessions the event changes, such as the member who loses a transferred
+  // purchase. Each is locked with the subject and gets a check of its current state.
+  alsoAffects?: string[];
 };
 
 export type ProviderSettings = {
@@ -55,7 +58,7 @@ export type RpcClient = {
   ) => PromiseLike<{ data: unknown; error: { code?: string } | null }>;
 };
 
-const OUTCOMES: readonly Outcome[] = ['processed', 'duplicate', 'superseded', 'stale'];
+const OUTCOMES: readonly Outcome[] = ['processed', 'duplicate', 'superseded', 'stale', 'failed'];
 
 // Hands an event to public.receive_webhook_event with the server key. The error's own text is
 // never passed on or logged.
@@ -68,6 +71,7 @@ export function databaseRecorder(client: RpcClient) {
       p_subject: event.subject,
       p_occurred_at: event.occurredAt.toISOString(),
       p_payload_hash: event.payloadHash,
+      p_also_affects: event.alsoAffects ?? [],
     });
     if (error?.code === 'PT422') throw new InvalidEventError();
     if (error || !OUTCOMES.includes(data as Outcome))
@@ -121,8 +125,9 @@ export function createWebhookHandler(settings: ProviderSettings, deps: Deps) {
     try {
       const outcome = await deps.record({ ...event, provider, payloadHash: await sha256Hex(body) });
       log({ provider, outcome, ref });
-      // Every recorded outcome is a 200, so the provider stops retrying: a repeat, an old event
-      // and an out-of-order one are all handled, by doing nothing or by queuing a reconcile.
+      // Every recorded outcome is a 200, so the provider stops retrying: a repeat, an old event,
+      // an out-of-order one and one that could not be applied are all handled, by doing nothing
+      // or by queuing a check of the current state. 'failed' is logged so it can be alerted on.
       return reply(200, { ok: true });
     } catch (thrown) {
       if (thrown instanceof InvalidEventError) {
