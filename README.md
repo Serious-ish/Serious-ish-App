@@ -123,7 +123,11 @@ vendor's `X-Signature` must be an HMAC of the body made within 5 minutes with
 `VERIFICATION_WEBHOOK_SECRET`), then hand the event to `public.receive_webhook_event`. That
 records each (provider, event ID) once, never applies an event more than a day old or older
 than one already applied for the same member or session (it queues a state check in
-`private.webhook_reconcile_requests` instead), and writes one audit entry per event. Supabase's
+`private.webhook_reconcile_requests` instead), and writes one audit entry per event. A
+RevenueCat TRANSFER arrives once, about the receiving member; every other app user it names
+(the member who lost the purchase) also gets a state check. If applying an event fails, the
+event is kept as `failed` with its error code and its member gets a state check, rather than
+being lost once the provider stops retrying (RevenueCat gives up after about 80 minutes). Supabase's
 sign-in check is off for both functions, so a member's token never counts as proof. Bodies are
 never logged or stored; the database keeps a SHA-256 fingerprint.
 
@@ -131,9 +135,14 @@ The vendor's signature format is a placeholder until the vendor contract (FD-002
 only `_shared/webhook-providers.ts` changes then. What each event changes arrives with plans
 (FT-056) and the age check (FT-019) in `private.apply_webhook_event`.
 
-To deploy, set both secrets with `pnpm exec supabase secrets set --remote=<ref>`, then
-`pnpm exec supabase functions deploy revenuecat-webhook verification-webhook --remote=<ref>`.
-Locally, `supabase/functions/.env` needs test values for both (at least 32 characters).
+To deploy, in this order:
+
+1. Set both secrets with `pnpm exec supabase secrets set --remote=<ref>`. Each needs at least
+   32 random characters; for `REVENUECAT_WEBHOOK_AUTH`, not counting `Bearer `.
+2. `pnpm exec supabase db push --remote=<ref>`.
+3. `pnpm exec supabase functions deploy revenuecat-webhook verification-webhook --remote=<ref>`.
+
+Locally, `supabase/functions/.env` needs test values for both.
 
 Rules for database changes (TRD 3.2, Security 4):
 

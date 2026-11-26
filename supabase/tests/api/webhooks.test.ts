@@ -209,6 +209,16 @@ describe('webhook contract', () => {
             ),
           },
         ],
+        [
+          'from the future',
+          {
+            'X-Signature': await signVendor(
+              body,
+              VENDOR_SECRET,
+              Date.now() + SIGNATURE_TOLERANCE_MS + 60_000,
+            ),
+          },
+        ],
         ['garbled header', { 'X-Signature': 't=abc,v1=zz' }],
       ];
       for (const [name, headers] of cases) {
@@ -232,6 +242,9 @@ describe('webhook contract', () => {
     it('secrets that are missing or too short stop the function from starting', () => {
       assert.throws(() => revenueCat(undefined));
       assert.throws(() => revenueCat('short'));
+      // "Bearer " does not count towards the 32 random characters.
+      assert.throws(() => revenueCat(`Bearer ${'a'.repeat(25)}`));
+      assert.doesNotThrow(() => revenueCat(`Bearer ${'a'.repeat(32)}`));
       assert.throws(() => ageCheck(''));
     });
 
@@ -273,6 +286,55 @@ describe('webhook contract', () => {
         rows.map((r) => [r.status, r.audits]),
         [['processed', 1]],
       );
+    });
+  });
+
+  describe('transfers and events that cannot be applied', () => {
+    it('a TRANSFER is applied to the receiving member and checks every other app user named', async () => {
+      const to = randomUUID();
+      const from = randomUUID();
+      const anonymous = `$RCAnonymousID:${randomUUID().replaceAll('-', '')}`;
+      // Shaped like RevenueCat's TRANSFER: no app_user_id, sent once for both sides.
+      const event = {
+        api_version: '1.0',
+        event: {
+          id: randomUUID(),
+          type: 'TRANSFER',
+          event_timestamp_ms: Date.now(),
+          store: 'APP_STORE',
+          transferred_from: [from],
+          transferred_to: [anonymous, to],
+        },
+      };
+      assert.equal((await rcHandler(post(event, { Authorization: RC_AUTH }))).status, 200);
+      assert.deepEqual(
+        (await eventRows('revenuecat', to)).map((r) => [r.provider_event_id, r.status, r.audits]),
+        [[event.event.id, 'processed', 1]],
+      );
+      const requests = await db`
+        select subject, reason from private.webhook_reconcile_requests
+        where provider = 'revenuecat' and subject in (${from}, ${anonymous}, ${to})
+        order by subject`;
+      assert.deepEqual(
+        Array.from(requests, (r) => [r.subject, r.reason]),
+        [
+          [anonymous, 'transfer'],
+          [from, 'transfer'],
+        ],
+      );
+    });
+
+    it('an event that could not be applied is answered 200 and logged as failed', async () => {
+      const entries: LogEntry[] = [];
+      const handler = createWebhookHandler(revenueCat(RC_AUTH), {
+        record: async () => 'failed',
+        log: (entry) => entries.push(entry),
+      });
+      const res = await handler(
+        post(revenueCatEvent(`member-${randomUUID()}`), { Authorization: RC_AUTH }),
+      );
+      assert.equal(res.status, 200);
+      assert.equal(entries.at(-1)?.outcome, 'failed');
     });
   });
 
@@ -403,9 +465,18 @@ describe('webhook contract', () => {
       served = probe?.status === 401 && 'REVENUECAT_WEBHOOK_AUTH' in secrets;
     });
 
+    // These are the only tests that prove verify_jwt = false and the secrets wiring, so in CI
+    // they fail rather than skip when the functions are not being served.
+    function whenServed(t: { skip: (message: string) => void }): boolean {
+      if (served) return true;
+      const message = 'Edge Functions are not being served with supabase/functions/.env';
+      if (process.env.CI) assert.fail(message);
+      t.skip(message);
+      return false;
+    }
+
     it('revenuecat-webhook refuses a wrong secret and records a signed event once', async (t) => {
-      if (!served)
-        return t.skip('Edge Functions are not being served with supabase/functions/.env');
+      if (!whenServed(t)) return;
       const subject = `member-${randomUUID()}`;
       const event = JSON.stringify(revenueCatEvent(subject));
       const call = (auth: string) =>
@@ -424,8 +495,7 @@ describe('webhook contract', () => {
     });
 
     it('verification-webhook refuses an unsigned event and records a signed one once', async (t) => {
-      if (!served)
-        return t.skip('Edge Functions are not being served with supabase/functions/.env');
+      if (!whenServed(t)) return;
       const session = `session-${randomUUID()}`;
       const body = JSON.stringify(vendorEvent(session));
       const call = (headers: Record<string, string>) =>

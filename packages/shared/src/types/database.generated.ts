@@ -870,7 +870,7 @@ isOneToOne: false
             }[]
                            },
 "receive_webhook_event":
-{ Args: { "p_event_id": string,"p_event_type": string,"p_occurred_at": string,"p_payload_hash": string,"p_provider": string,"p_subject": string }; Returns: string
+{ Args: { "p_also_affects"?: (string)[],"p_event_id": string,"p_event_type": string,"p_occurred_at": string,"p_payload_hash": string,"p_provider": string,"p_subject": string }; Returns: string
                            },
 "remove_photo":
 { Args: { "p_photo_id": string }; Returns: undefined

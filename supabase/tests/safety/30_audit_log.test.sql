@@ -9,7 +9,7 @@ select set_config('search_path', concat_ws(', ', 'public', 'extensions',
   (select n.nspname from pg_extension e join pg_namespace n on n.oid = e.extnamespace
     where e.extname = 'pgtap')), true);
 
-select plan(17);
+select plan(19);
 
 -- Fixtures -------------------------------------------------------------------------------
 insert into auth.users (id, aud, role, email, created_at, updated_at) values
@@ -82,9 +82,16 @@ select throws_ok(
 );
 
 -- Who can read it ------------------------------------------------------------------------
+-- Server services write entries too (webhooks, FT-010). Have one in place, so the read rules
+-- are checked while an entry with no staff actor exists.
+select public.receive_webhook_event('revenuecat', 'audit-test-' || gen_random_uuid(), 'TEST',
+  'member-audit-test', now(), repeat('a', 64));
+
 select pg_temp.claims('00000000-0000-0000-0000-0000000000f1', 'aal2');
 set local role authenticated;
 select is((select count(*)::int from public.audit_log), 1, 'a staff member reads their own entries');
+select is((select count(*)::int from public.audit_log where actor_service is not null), 0,
+  'and not the entries written by a server service');
 select throws_ok(
   $$ insert into public.audit_log (actor_staff_id, action, subject_type, subject_id)
      values ('00000000-0000-0000-0000-0000000000f1', 'forged', 'member', '00000000-0000-0000-0000-00000000000b') $$,
@@ -108,6 +115,8 @@ select pg_temp.claims('00000000-0000-0000-0000-0000000000f2', 'aal2');
 set local role authenticated;
 select is((select count(*)::int from public.audit_log), current_setting('test.audit_total')::int,
   'an admin with a verified second factor reads all entries');
+select ok((select count(*) from public.audit_log where actor_service is not null) >= 1,
+  'including the entries written by a server service');
 set local role postgres;
 
 -- moderator_actions: append-only, except filling in a notification time once ------------
